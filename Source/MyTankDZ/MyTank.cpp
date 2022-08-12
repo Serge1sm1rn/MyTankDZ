@@ -41,6 +41,7 @@ void AMyTank::Shoot()
 
 void AMyTank::MoveForward(float Scale)
 {
+	MoveForwardScale = Scale;
 }
 
 
@@ -56,6 +57,9 @@ void AMyTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	auto Location = GetActorLocation();
+	auto NewLocation = Location + GetActorForwardVector() * MoveForwardScale * Speed * DeltaTime;
+	SetActorLocation(NewLocation, true);
 }
 
 // Called to bind functionality to input
