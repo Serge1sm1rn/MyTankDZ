@@ -10,6 +10,7 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent ->BindAction("Shoot", EInputEvent::IE_Pressed,this, &AMyPlayerController::OnShoot);
 	InputComponent ->BindAxis("MoveForward", this, &AMyPlayerController::OnMoveForward);
 	InputComponent ->BindAction("Shoot", EInputEvent::IE_Pressed,this, &AMyPlayerController::OnShoot);
+	InputComponent ->BindAxis("MoveRight", this, &AMyPlayerController::OnMoveRight);
 	
 }
 
@@ -34,5 +35,12 @@ void AMyPlayerController::OnMoveForward(float Scale)
 	if (Tank)
 	{
 		Tank->MoveForward(Scale);
+	}
+}
+void AMyPlayerController::OnMoveRight(float Scale)
+{
+	if (Tank)
+	{
+		Tank->MoveRight(Scale);
 	}
 }

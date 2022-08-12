@@ -37,7 +37,7 @@ public:
 
 	void Shoot();
 	void MoveForward(float Scale);
-	
+	void MoveRight(float Scale);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
 	float Speed = 500;
@@ -54,7 +54,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	float MoveForwardScale = 0;
-	
+	float MoveRightScale = 0;
 	
 
 };

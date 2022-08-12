@@ -44,6 +44,11 @@ void AMyTank::MoveForward(float Scale)
 	MoveForwardScale = Scale;
 }
 
+void AMyTank::MoveRight(float Scale)
+{
+	MoveRightScale = Scale;
+}
+
 
 // Called when the game starts or when spawned
 void AMyTank::BeginPlay()
@@ -60,6 +65,10 @@ void AMyTank::Tick(float DeltaTime)
 	auto Location = GetActorLocation();
 	auto NewLocation = Location + GetActorForwardVector() * MoveForwardScale * Speed * DeltaTime;
 	SetActorLocation(NewLocation, true);
+
+	auto CurrentLocation = GetActorLocation();
+	auto NewCurrentLocation = CurrentLocation + GetActorRightVector() * MoveRightScale * Speed * DeltaTime;
+	SetActorLocation(NewCurrentLocation, true);
 }
 
 // Called to bind functionality to input

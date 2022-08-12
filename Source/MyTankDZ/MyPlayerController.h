@@ -23,6 +23,7 @@ private:
 	void OnShoot();
 	
 	void OnMoveForward(float Scale);
+	void OnMoveRight(float Scale);
 
 	AMyTank* Tank = nullptr;
 };
