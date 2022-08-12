@@ -3,7 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "MyTank.generated.h"
 
 UCLASS()
@@ -12,8 +15,31 @@ class MYTANKDZ_API AMyTank : public APawn
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UBoxComponent* Collision;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UStaticMeshComponent* BodyMesh;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UStaticMeshComponent* TurretMesh;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	USpringArmComponent* Arm;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UCameraComponent* Camera;
+	
 	// Sets default values for this pawn's properties
 	AMyTank();
+	
+	virtual void OnConstruction(const FTransform& Transform) override;
+
+	void Shoot();
+	void MoveForward(float Scale);
+	
+
+	
 
 protected:
 	// Called when the game starts or when spawned
