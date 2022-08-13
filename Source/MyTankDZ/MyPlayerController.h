@@ -18,7 +18,14 @@ class MYTANKDZ_API AMyPlayerController : public APlayerController
 public:
 	virtual void SetupInputComponent() override;
 
-virtual void OnPossess(APawn* InPawn) override;
+	virtual void OnPossess(APawn* InPawn) override;
+
+	virtual void Tick(float DeltaSeconds) override;
+
+	FVector GetWorldMousePosition() const
+	{
+		return  WorldMousePosition;
+	}
 private:
 	void OnShoot();
 	
@@ -28,7 +35,7 @@ private:
 
 	void OnRotateRight(float Scale);
 	
-	
-
 	AMyTank* Tank = nullptr;
+
+	FVector WorldMousePosition;
 };

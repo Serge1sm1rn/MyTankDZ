@@ -3,6 +3,8 @@
 
 #include "MyPlayerController.h"
 
+#include "DrawDebugHelpers.h"
+
 void AMyPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -19,6 +21,22 @@ void AMyPlayerController::OnPossess(APawn* InPawn)
 	Super::OnPossess(InPawn);
 
 	Tank = Cast<AMyTank>(InPawn);
+	
+}
+
+void AMyPlayerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	if (Tank)
+	{
+		FVector MousePosition;
+		FVector MouseDirection;
+	
+		DeprojectMousePositionToWorld(MousePosition,MouseDirection);
+
+		auto Z = FMath::Abs(Tank->GetActorLocation().Z - MousePosition.Z);
+		WorldMousePosition = MousePosition+MouseDirection * Z / MouseDirection.Z;
+	}
 	
 }
 

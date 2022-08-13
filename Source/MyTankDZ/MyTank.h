@@ -45,7 +45,10 @@ public:
 	float Speed = 500;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
-	float RotationSpeed = 1;
+	float RotationSpeed = 60;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	float Acceleration = 0.1f;
 
 protected:
 	// Called when the game starts or when spawned
@@ -61,5 +64,9 @@ public:
 	float MoveForwardScale = 0;
 	float MoveRightScale = 0;
 	float RotateRightScale = 0;
+	float CurrentMoveForwardScale = 0;
+	float CurrentRotateRightScale = 0;
+	float CurrentMoveRightScale = 0;
+	
 
 };

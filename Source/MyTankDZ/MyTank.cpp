@@ -2,6 +2,7 @@
 
 
 #include "MyTank.h"
+#include "MyTankDZ.h"
 
 // Sets default values
 AMyTank::AMyTank()
@@ -66,17 +67,28 @@ void AMyTank::BeginPlay()
 void AMyTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	//Logs
+	UE_LOG(LogTanks,Warning,TEXT("Acceleration %f"), CurrentMoveForwardScale);
+	
+	//MoveForward
+	CurrentMoveForwardScale = FMath::Lerp(CurrentMoveForwardScale, MoveForwardScale, Acceleration);
 
 	auto Location = GetActorLocation();
-	auto NewLocation = Location + GetActorForwardVector() * MoveForwardScale * Speed * DeltaTime;
+	auto NewLocation = Location + GetActorForwardVector() * CurrentMoveForwardScale * Speed * DeltaTime;
 	SetActorLocation(NewLocation, true);
+	
+	//MoveRight
+	CurrentMoveRightScale = FMath::Lerp(CurrentMoveRightScale, MoveRightScale, Acceleration);
 
 	auto CurrentLocation = GetActorLocation();
-	auto NewCurrentLocation = CurrentLocation + GetActorRightVector() * MoveRightScale * Speed * DeltaTime;
+	auto NewCurrentLocation = CurrentLocation + GetActorRightVector() * CurrentMoveRightScale * Speed * DeltaTime;
 	SetActorLocation(NewCurrentLocation, true);
-
+	
+	//Rotation
+	CurrentRotateRightScale = FMath::Lerp(CurrentRotateRightScale, RotateRightScale, Acceleration);
+	
 	auto Rotation = GetActorRotation();
-	Rotation.Roll = Rotation.Roll + RotationSpeed + RotateRightScale * DeltaTime;
+	Rotation.Yaw = Rotation.Yaw + RotationSpeed * CurrentRotateRightScale * DeltaTime;
 	SetActorRotation(Rotation);
 	
 }
