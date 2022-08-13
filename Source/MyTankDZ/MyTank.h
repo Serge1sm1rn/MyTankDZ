@@ -38,9 +38,14 @@ public:
 	void Shoot();
 	void MoveForward(float Scale);
 	void MoveRight(float Scale);
+	void RotateRight(float Scale);
+
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
 	float Speed = 500;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	float RotationSpeed = 1;
 
 protected:
 	// Called when the game starts or when spawned
@@ -55,6 +60,6 @@ public:
 
 	float MoveForwardScale = 0;
 	float MoveRightScale = 0;
-	
+	float RotateRightScale = 0;
 
 };
