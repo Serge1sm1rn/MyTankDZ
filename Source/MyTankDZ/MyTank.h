@@ -50,6 +50,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
 	float Acceleration = 0.1f;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	float TurretRotationSpeed = 0.1f;
+
+	virtual void PossessedBy(AController* NewController) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -67,6 +72,8 @@ public:
 	float CurrentMoveForwardScale = 0;
 	float CurrentRotateRightScale = 0;
 	float CurrentMoveRightScale = 0;
+
+	class AMyPlayerController* TankController;
 	
 
 };

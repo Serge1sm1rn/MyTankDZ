@@ -2,7 +2,10 @@
 
 
 #include "MyTank.h"
+#include "MyPlayerController.h"
 #include "MyTankDZ.h"
+#include "Kismet/KismetMaterialLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AMyTank::AMyTank()
@@ -56,6 +59,13 @@ void AMyTank::RotateRight(float Scale)
 }
 
 
+void AMyTank::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	TankController = Cast<AMyPlayerController>(NewController);
+}
+
 // Called when the game starts or when spawned
 void AMyTank::BeginPlay()
 {
@@ -90,6 +100,19 @@ void AMyTank::Tick(float DeltaTime)
 	auto Rotation = GetActorRotation();
 	Rotation.Yaw = Rotation.Yaw + RotationSpeed * CurrentRotateRightScale * DeltaTime;
 	SetActorRotation(Rotation);
+
+	//TurretRotation
+	if (TankController)
+	{
+		auto MousePosition = TankController->GetWorldMousePosition();
+		
+		auto TurretRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),MousePosition );
+		auto CurrentTurretRotation = TurretMesh->GetComponentRotation();
+		TurretRotation.Pitch = CurrentTurretRotation.Pitch;
+		TurretRotation.Roll = CurrentTurretRotation.Roll;
+		CurrentTurretRotation.Yaw = FMath::Lerp(CurrentTurretRotation.Yaw, TurretRotation.Yaw,TurretRotationSpeed);
+		TurretMesh->SetWorldRotation(CurrentTurretRotation);
+	}
 	
 }
 
