@@ -2,6 +2,8 @@
 
 
 #include "MyTank.h"
+
+#include "DrawDebugHelpers.h"
 #include "MyPlayerController.h"
 #include "MyTankDZ.h"
 #include "Kismet/KismetMaterialLibrary.h"
@@ -30,6 +32,7 @@ AMyTank::AMyTank()
 	Arm->bInheritPitch = false;
 	Arm->bInheritRoll = false;
 	Arm->bInheritYaw = false;
+	Arm->bDoCollisionTest = false;
 	Arm->TargetArmLength = 800;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
@@ -122,6 +125,11 @@ void AMyTank::Tick(float DeltaTime)
 		TurretRotation.Roll = CurrentTurretRotation.Roll;
 		CurrentTurretRotation = FMath::Lerp(CurrentTurretRotation, TurretRotation, TurretRotationSpeed);
 		TurretMesh->SetWorldRotation(CurrentTurretRotation);
+
+		DrawDebugLine(GetWorld(),
+		CannonAttachment->GetComponentLocation(),
+		CannonAttachment->GetComponentLocation() + CannonAttachment->GetForwardVector() * 100, FColor::Green,
+		false,-1,0,5);
 	}
 	
 }

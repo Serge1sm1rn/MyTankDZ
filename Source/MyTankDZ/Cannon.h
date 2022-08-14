@@ -19,7 +19,10 @@ class MYTANKDZ_API ACannon : public AActor
 	GENERATED_BODY()
 	
 public:
-
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	USceneComponent* DefaultRoot;
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UStaticMeshComponent* CanonBody;
 

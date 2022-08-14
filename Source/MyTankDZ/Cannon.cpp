@@ -9,8 +9,11 @@ ACannon::ACannon()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	DefaultRoot = CreateDefaultSubobject<USceneComponent>("DefaultRoot");
+	RootComponent = DefaultRoot;
+
 	CanonBody = CreateDefaultSubobject<UStaticMeshComponent>("CanonBody");
-	RootComponent = CanonBody;
+	CanonBody->SetupAttachment(RootComponent);
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>("ProjectileSpawnPoint");
 	ProjectileSpawnPoint->SetupAttachment(RootComponent);
