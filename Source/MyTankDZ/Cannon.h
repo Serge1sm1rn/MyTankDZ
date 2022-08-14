@@ -3,10 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
 #include "Cannon.generated.h"
-
-class UArrowComponent;
+UENUM()
+enum class ECannonType
+{
+	Projectile,
+	Trace
+	
+};
 UCLASS()
 class MYTANKDZ_API ACannon : public AActor
 {
@@ -18,9 +24,14 @@ public:
 	UStaticMeshComponent* CanonBody;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
-	UArrowComponent* CannonAttachment;
+	UArrowComponent* ProjectileSpawnPoint;
 	// Sets default values for this actor's properties
 	ACannon();
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Components)
+	ECannonType CannonType = ECannonType::Projectile;
+
+	void Shoot();
 
 protected:
 	// Called when the game starts or when spawned

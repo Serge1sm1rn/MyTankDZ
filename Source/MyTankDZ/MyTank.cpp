@@ -44,6 +44,7 @@ void AMyTank::OnConstruction(const FTransform& Transform)
 
 void AMyTank::Shoot()
 {
+	
 }
 
 void AMyTank::MoveForward(float Scale)
@@ -73,6 +74,12 @@ void AMyTank::PossessedBy(AController* NewController)
 void AMyTank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (CannonClass)
+	{
+		auto Cannon = GetWorld()->SpawnActor(CannonClass);
+		Cannon->AttachToComponent(CannonAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
+	}
 	
 }
 

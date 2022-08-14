@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Cannon.h"
 #include "Camera/CameraComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
@@ -56,6 +57,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
 	float TurretRotationSpeed = 0.1f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	TSubclassOf<ACannon> CannonClass;
 
 	virtual void PossessedBy(AController* NewController) override;
 
