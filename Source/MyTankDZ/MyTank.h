@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
+#include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -29,6 +30,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UCameraComponent* Camera;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UArrowComponent* CannonAttachment;
 	
 	// Sets default values for this pawn's properties
 	AMyTank();

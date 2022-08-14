@@ -22,6 +22,9 @@ AMyTank::AMyTank()
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>("TurretMesh");
 	TurretMesh->SetupAttachment(BodyMesh);
 
+	CannonAttachment = CreateDefaultSubobject<UArrowComponent>("CannonAttachment");
+	CannonAttachment->SetupAttachment(TurretMesh);
+
 	Arm = CreateDefaultSubobject<USpringArmComponent>("Arm");
 	Arm->SetupAttachment(RootComponent);
 	Arm->bInheritPitch = false;
@@ -110,7 +113,7 @@ void AMyTank::Tick(float DeltaTime)
 		auto CurrentTurretRotation = TurretMesh->GetComponentRotation();
 		TurretRotation.Pitch = CurrentTurretRotation.Pitch;
 		TurretRotation.Roll = CurrentTurretRotation.Roll;
-		CurrentTurretRotation.Yaw = FMath::Lerp(CurrentTurretRotation.Yaw, TurretRotation.Yaw,TurretRotationSpeed);
+		CurrentTurretRotation = FMath::Lerp(CurrentTurretRotation, TurretRotation, TurretRotationSpeed);
 		TurretMesh->SetWorldRotation(CurrentTurretRotation);
 	}
 	

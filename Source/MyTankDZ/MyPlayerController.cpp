@@ -35,7 +35,7 @@ void AMyPlayerController::Tick(float DeltaSeconds)
 		DeprojectMousePositionToWorld(MousePosition,MouseDirection);
 
 		auto Z = FMath::Abs(Tank->GetActorLocation().Z - MousePosition.Z);
-		WorldMousePosition = MousePosition+MouseDirection * Z / MouseDirection.Z;
+		WorldMousePosition = MousePosition-MouseDirection * Z / MouseDirection.Z;
 	}
 	
 }
