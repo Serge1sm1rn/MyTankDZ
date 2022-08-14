@@ -45,9 +45,31 @@ void AMyTank::OnConstruction(const FTransform& Transform)
 	Super::OnConstruction(Transform);
 }
 
+void AMyTank::StartFire()
+{
+	if (Cannon)
+	{
+		Cannon->StartFire;
+	}
+	
+}
+
+void AMyTank::StopFire()
+{
+	if (Cannon)
+	{
+		Cannon->StopFire();
+	}
+	
+}
+
+
 void AMyTank::Shoot()
 {
-	
+	if (Cannon)
+	{
+		Cannon->Shoot();
+	}
 }
 
 void AMyTank::MoveForward(float Scale)
@@ -80,7 +102,7 @@ void AMyTank::BeginPlay()
 
 	if (CannonClass)
 	{
-		auto Cannon = GetWorld()->SpawnActor(CannonClass);
+		 Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass);
 		Cannon->AttachToComponent(CannonAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
 	

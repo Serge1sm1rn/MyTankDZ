@@ -31,10 +31,15 @@ public:
 	// Sets default values for this actor's properties
 	ACannon();
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Components)
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	ECannonType CannonType = ECannonType::Projectile;
 
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	float ReloadTime = 1;
 	void Shoot();
+	
+	 void StartFire();
+	 void StopFire();
 
 protected:
 	// Called when the game starts or when spawned
@@ -44,4 +49,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	void OnReload();
+	FTimerHandle ReloadTimer;
+	bool IsReadyToShoot = true;
+
+	void OnShoots();
+	FTimerHandle TimeShoots;
 };

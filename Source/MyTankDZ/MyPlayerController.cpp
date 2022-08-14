@@ -13,7 +13,9 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent ->BindAxis("MoveForward", this, &AMyPlayerController::OnMoveForward);
 	InputComponent ->BindAxis("RotateRight", this, &AMyPlayerController::OnRotateRight);
 	InputComponent ->BindAxis("MoveRight", this, &AMyPlayerController::OnMoveRight);
-	
+	InputComponent ->BindAction("Fire",IE_Pressed, this, &AMyPlayerController::OnStartFire);
+	InputComponent ->BindAction("Fire",IE_Released, this, &AMyPlayerController::OnStopFire);
+
 }
 
 void AMyPlayerController::OnPossess(APawn* InPawn)
@@ -39,6 +41,23 @@ void AMyPlayerController::Tick(float DeltaSeconds)
 	}
 	
 }
+
+void AMyPlayerController::OnStartFire()
+{
+	if (Tank)
+	{
+		Tank->StartFire();
+	}
+}
+
+void AMyPlayerController::OnStopFire()
+{
+	if (Tank)
+	{
+		Tank->StopFire();
+	}
+}
+
 
 void AMyPlayerController::OnShoot()
 {

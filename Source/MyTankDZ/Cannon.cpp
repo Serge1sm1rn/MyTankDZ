@@ -21,14 +21,39 @@ ACannon::ACannon()
 
 void ACannon::Shoot()
 {
-	switch (CannonType)
+	if (!IsReadyToShoot)
 	{
-	case ECannonType::Projectile:
-		break;
-	case ECannonType::Trace:
-		break;
+		return;
 	}
+	 
+		switch (CannonType)
+		{
+		case ECannonType::Projectile:
+			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red,
+				FString::Printf(TEXT("Shoot")) );
+			break;
+		case ECannonType::Trace:
+			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red,
+				FString::Printf(TEXT("Trace")) );
+			break;
+		}
+	
+	IsReadyToShoot = false;
+	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ACannon::OnReload, ReloadTime);
 }
+
+void ACannon::StartFire()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red,
+				FString::Printf(TEXT("Fire")) );
+	GetWorldTimerManager().SetTimer(TimeShoots, this, &ACannon::OnReload,TimeShoots );
+}
+
+void ACannon::StopFire()
+{
+	GetWorldTimerManager().ClearTimer(ReloadTimer);
+}
+
 
 // Called when the game starts or when spawned
 void ACannon::BeginPlay()
@@ -41,6 +66,17 @@ void ACannon::BeginPlay()
 void ACannon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	GEngine->AddOnScreenDebugMessage(123, -1, FColor::Red,
+				FString::Printf(TEXT("Reload in %f seconds"),GetWorldTimerManager().GetTimerRemaining(ReloadTimer))  );
 
+}
+
+void ACannon::OnReload()
+{
+	IsReadyToShoot = true;
+}
+void ACannon::OnShoots()
+{
+	IsReadyToShoot = true;
 }
 

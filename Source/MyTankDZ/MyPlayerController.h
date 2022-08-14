@@ -16,6 +16,7 @@ class MYTANKDZ_API AMyPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	
 	virtual void SetupInputComponent() override;
 
 	virtual void OnPossess(APawn* InPawn) override;
@@ -27,6 +28,10 @@ public:
 		return  WorldMousePosition;
 	}
 private:
+	void OnStartFire();
+	
+	void OnStopFire();
+	
 	void OnShoot();
 	
 	void OnMoveForward(float Scale);

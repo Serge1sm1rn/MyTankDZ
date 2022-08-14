@@ -44,6 +44,9 @@ public:
 	void MoveForward(float Scale);
 	void MoveRight(float Scale);
 	void RotateRight(float Scale);
+	void StartFire();
+	void StopFire();
+
 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
@@ -80,8 +83,11 @@ public:
 	float CurrentMoveForwardScale = 0;
 	float CurrentRotateRightScale = 0;
 	float CurrentMoveRightScale = 0;
+	
 
 	class AMyPlayerController* TankController;
-	
+
+	UPROPERTY()
+	ACannon* Cannon;
 
 };
