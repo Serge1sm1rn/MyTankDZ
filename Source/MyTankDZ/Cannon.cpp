@@ -18,7 +18,7 @@ ACannon::ACannon()
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>("ProjectileSpawnPoint");
 	ProjectileSpawnPoint->SetupAttachment(RootComponent);
 }
-//Usualu
+//Shooting
 void ACannon::Shoot()
 {
 	if (!IsReadyToShoot)
@@ -41,7 +41,7 @@ void ACannon::Shoot()
 	IsReadyToShoot = false;
 	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ACannon::OnReload, ReloadTime);
 }
-
+//Alternative shooting
 void ACannon::StartFire()
 {
 	
