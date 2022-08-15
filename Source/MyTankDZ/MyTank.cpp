@@ -49,7 +49,11 @@ void AMyTank::StartFire()
 {
 	if (Cannon)
 	{
-		Cannon->StartFire;
+		Cannon->StartFire();
+	}
+	else
+	{
+		return;
 	}
 	
 }
@@ -60,6 +64,7 @@ void AMyTank::StopFire()
 	{
 		Cannon->StopFire();
 	}
+	
 	
 }
 

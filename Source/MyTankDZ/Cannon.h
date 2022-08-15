@@ -36,8 +36,11 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	float ReloadTime = 1;
-	void Shoot();
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	float TimeShoot = 0.1f;
 	
+	 void Shoot();
 	 void StartFire();
 	 void StopFire();
 
