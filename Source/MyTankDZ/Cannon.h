@@ -2,6 +2,8 @@
 
 #pragma once
 
+
+
 #include "CoreMinimal.h"
 #include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
@@ -13,7 +15,22 @@ enum class ECannonType
 	Trace
 	
 };
+
+USTRUCT(BlueprintType)
+struct FAmmoData
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Weapon)
+	int32 Bullets;
+	//Endless ammo or not
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Weapon)
+	bool infinite;
+};
+
 UCLASS()
+
+
 class MYTANKDZ_API ACannon : public AActor
 {
 	GENERATED_BODY()
