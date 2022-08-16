@@ -11,13 +11,13 @@ AGrenadeLauncher::AGrenadeLauncher()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Root = CreateDefaultSubobject<USceneComponent>("Root");
-	RootComponent = Root;
+	DefaultRoot = CreateDefaultSubobject<USceneComponent>("DefaultRoot");
+	RootComponent = DefaultRoot;
 
 	GrenadeLauncherBody = CreateDefaultSubobject<UStaticMeshComponent>("GrenadeLauncherBody");
 	GrenadeLauncherBody->SetupAttachment(RootComponent);
 
-	GrenadeSpawnPoint = CreateDefaultSubobject<UArrowComponent>("ProjectileSpawnPoint");
+	GrenadeSpawnPoint = CreateDefaultSubobject<UArrowComponent>("GrenadeSpawnPoint");
 	GrenadeSpawnPoint->SetupAttachment(RootComponent);
 
 }

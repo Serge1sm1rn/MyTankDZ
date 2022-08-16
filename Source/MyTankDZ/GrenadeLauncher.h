@@ -14,7 +14,7 @@ class MYTANKDZ_API AGrenadeLauncher : public AActor
 	
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
-	USceneComponent* Root;
+	USceneComponent* DefaultRoot;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UStaticMeshComponent* GrenadeLauncherBody;

@@ -121,7 +121,7 @@ void AMyTank::BeginPlay()
 	if (GrenadeLauncherClass)
 	{
 		GrenadeLauncher = GetWorld()->SpawnActor<AGrenadeLauncher>(GrenadeLauncherClass);
-		Cannon->AttachToComponent(GrenadeLauncherAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
+		GrenadeLauncher->AttachToComponent(GrenadeLauncherAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
 }
 

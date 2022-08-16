@@ -70,7 +70,7 @@ public:
 	TSubclassOf<ACannon> CannonClass;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
-	TSubclassOf<ACannon> GrenadeLauncherClass;
+	TSubclassOf<AGrenadeLauncher> GrenadeLauncherClass;
 
 	virtual void PossessedBy(AController* NewController) override;
 
