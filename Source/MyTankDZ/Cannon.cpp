@@ -3,6 +3,8 @@
 
 #include "Cannon.h"
 
+#include "MyTankDZ.h"
+
 // Sets default values
 ACannon::ACannon()
 {
@@ -44,13 +46,56 @@ void ACannon::Shoot()
 //Alternative shooting
 void ACannon::StartFire()
 {
+	if (IsAmmoEmpty())return;
 	
-	GetWorldTimerManager().SetTimer(TimeShoots,this,&ACannon::OnShoots, TimeShoot, true);
+		GetWorldTimerManager().SetTimer(TimeShoots,this,&ACannon::OnShoots, TimeShoot, true);
+
+		
+	
+	
 }
 
 void ACannon::StopFire()
 {
 	GetWorldTimerManager().ClearTimer(TimeShoots);
+}
+
+void ACannon::DecreaseAmmo()
+{
+	CurrentAmmo.Bullets --;
+	LogAmmo();
+
+	if (IsClipEmpty() && !IsAmmoEmpty())
+	{
+		ChangeClip();
+	}
+}
+
+bool ACannon::IsAmmoEmpty() const
+{
+	return !CurrentAmmo.infinite && CurrentAmmo.Clips == 0 &&IsClipEmpty();
+}
+
+bool ACannon::IsClipEmpty() const
+{
+	return CurrentAmmo.Bullets == 0;
+}
+
+void ACannon::ChangeClip()
+{
+	CurrentAmmo.Bullets = DefaultAmmo.Bullets;
+	if (!CurrentAmmo.infinite)
+	{
+		CurrentAmmo.Clips --;
+	}
+	UE_LOG(LogTanks, Display, TEXT("------Change Clip-------"), );
+}
+
+void ACannon::LogAmmo()
+{
+	FString AmmoInfo = "Ammo: " + FString::FromInt(CurrentAmmo.Bullets) + "/ ";
+	AmmoInfo += CurrentAmmo.infinite ? "Infinite" : FString::FromInt(CurrentAmmo.Clips);
+	UE_LOG(LogTanks, Display, TEXT("%s"), *AmmoInfo);
 }
 
 
@@ -59,6 +104,7 @@ void ACannon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CurrentAmmo = DefaultAmmo;
 }
 
 // Called every frame
@@ -76,8 +122,11 @@ void ACannon::OnReload()
 }
 void ACannon::OnShoots()
 {
+	if (IsAmmoEmpty())return;
+	
 	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Yellow,
 				FString::Printf(TEXT("Fire")) );
 	
+	DecreaseAmmo();
 }
 

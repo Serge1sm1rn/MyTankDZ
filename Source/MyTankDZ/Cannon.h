@@ -20,11 +20,16 @@ USTRUCT(BlueprintType)
 struct FAmmoData
 {
 	GENERATED_BODY()
-	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Weapon)
+	//Count ammo
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= "Weapon")
 	int32 Bullets;
+
+	//Clip count
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= "Weapon")
+	int32 Clips;
+	
 	//Endless ammo or not
-	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Weapon)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= "Weapon")
 	bool infinite;
 };
 
@@ -62,6 +67,15 @@ public:
 	 void StopFire();
 
 protected:
+	//Assigning parameters ammo
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= "Weapon")
+	FAmmoData DefaultAmmo{10,10,false};
+
+	void DecreaseAmmo();
+	bool IsAmmoEmpty() const;
+	bool IsClipEmpty() const;
+	void ChangeClip();
+	void LogAmmo();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -70,10 +84,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	
 	void OnReload();
 	FTimerHandle ReloadTimer;
 	bool IsReadyToShoot = true;
-
+	
 	void OnShoots();
 	FTimerHandle TimeShoots;
+
+	FAmmoData CurrentAmmo;
 };

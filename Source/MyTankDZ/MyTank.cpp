@@ -118,7 +118,7 @@ void AMyTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//Logs
-	UE_LOG(LogTanks,Warning,TEXT("Acceleration %f"), CurrentMoveForwardScale);
+	//UE_LOG(LogTanks,Warning,TEXT("Acceleration %f"), CurrentMoveForwardScale);
 	
 	//MoveForward
 	CurrentMoveForwardScale = FMath::Lerp(CurrentMoveForwardScale, MoveForwardScale, Acceleration);
