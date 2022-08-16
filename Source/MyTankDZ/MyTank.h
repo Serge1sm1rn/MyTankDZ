@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "GrenadeLauncher.h"
 #include "Camera/CameraComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
@@ -35,6 +36,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* CannonAttachment;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UArrowComponent* GrenadeLauncherAttachment;
+	
 	// Sets default values for this pawn's properties
 	AMyTank();
 	
@@ -63,6 +67,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
 	TSubclassOf<ACannon> CannonClass;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	TSubclassOf<ACannon> GrenadeLauncherClass;
 
 	virtual void PossessedBy(AController* NewController) override;
 
@@ -89,5 +96,6 @@ public:
 
 	UPROPERTY()
 	ACannon* Cannon;
+	AGrenadeLauncher* GrenadeLauncher;
 
 };

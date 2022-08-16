@@ -4,6 +4,7 @@
 #include "MyTank.h"
 
 #include "DrawDebugHelpers.h"
+#include "GrenadeLauncher.h"
 #include "MyPlayerController.h"
 #include "MyTankDZ.h"
 #include "Kismet/KismetMaterialLibrary.h"
@@ -50,10 +51,6 @@ void AMyTank::StartFire()
 	if (Cannon)
 	{
 		Cannon->StartFire();
-	}
-	else
-	{
-		return;
 	}
 	
 }
@@ -110,7 +107,12 @@ void AMyTank::BeginPlay()
 		 Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass);
 		Cannon->AttachToComponent(CannonAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
-	
+
+	if (GrenadeLauncherClass)
+	{
+		GrenadeLauncher = GetWorld()->SpawnActor<AGrenadeLauncher>(GrenadeLauncherClass);
+		Cannon->AttachToComponent(GrenadeLauncherAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
+	}
 }
 
 // Called every frame
@@ -156,6 +158,11 @@ void AMyTank::Tick(float DeltaTime)
 		DrawDebugLine(GetWorld(),
 		CannonAttachment->GetComponentLocation(),
 		CannonAttachment->GetComponentLocation() + CannonAttachment->GetForwardVector() * 100, FColor::Green,
+		false,-1,0,5);
+
+		DrawDebugLine(GetWorld(),
+		GrenadeLauncherAttachment->GetComponentLocation(),
+		GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 100, FColor::Green,
 		false,-1,0,5);
 	}
 	
