@@ -32,7 +32,15 @@ void AGrenadeLauncher::BeginPlay()
 // Called every frame
 void AGrenadeLauncher::Tick(float DeltaTime)
 {
+	
 	Super::Tick(DeltaTime);
+	GEngine->AddOnScreenDebugMessage(12, -1, FColor::Blue,
+				FString::Printf(TEXT("Reload in %f seconds"),GetWorldTimerManager().GetTimerRemaining(ReloadTimer))  );
 
+}
+
+void AGrenadeLauncher::FireBust()
+{
+	
 }
 

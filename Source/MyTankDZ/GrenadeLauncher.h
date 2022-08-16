@@ -21,6 +21,15 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* GrenadeSpawnPoint;
+
+	
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
+	float ReloadTime = 1;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
+	float TimeShoot = 0.1f;
+	
 	// Sets default values for this actor's properties
 	AGrenadeLauncher();
 
@@ -31,5 +40,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void FireBust();
 
+
+private:
+	
+	FTimerHandle ReloadTimer;
+	
 };

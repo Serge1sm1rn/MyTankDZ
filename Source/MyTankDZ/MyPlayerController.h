@@ -30,6 +30,8 @@ public:
 private:
 	void OnStartFire();
 	
+	void OnFireBust();
+	
 	void OnStopFire();
 	
 	void OnShoot();

@@ -46,7 +46,7 @@ void ACannon::Shoot()
 //Alternative shooting
 void ACannon::StartFire()
 {
-	if (IsAmmoEmpty())return;
+	
 	
 		GetWorldTimerManager().SetTimer(TimeShoots,this,&ACannon::OnShoots, TimeShoot, true);
 

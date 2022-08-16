@@ -27,6 +27,9 @@ AMyTank::AMyTank()
 
 	CannonAttachment = CreateDefaultSubobject<UArrowComponent>("CannonAttachment");
 	CannonAttachment->SetupAttachment(TurretMesh);
+	
+	GrenadeLauncherAttachment = CreateDefaultSubobject<UArrowComponent>("GrenadeLauncherAttachment");
+	GrenadeLauncherAttachment->SetupAttachment(TurretMesh);
 
 	Arm = CreateDefaultSubobject<USpringArmComponent>("Arm");
 	Arm->SetupAttachment(RootComponent);
@@ -65,6 +68,13 @@ void AMyTank::StopFire()
 	
 }
 
+void AMyTank::FireBust()
+{
+	if (GrenadeLauncher)
+	{
+		GrenadeLauncher->FireBust();
+	}
+}
 
 void AMyTank::Shoot()
 {
@@ -160,10 +170,10 @@ void AMyTank::Tick(float DeltaTime)
 		CannonAttachment->GetComponentLocation() + CannonAttachment->GetForwardVector() * 100, FColor::Green,
 		false,-1,0,5);
 
-		DrawDebugLine(GetWorld(),
-		GrenadeLauncherAttachment->GetComponentLocation(),
-		GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 100, FColor::Green,
-		false,-1,0,5);
+	//	DrawDebugLine(GetWorld(),
+		//GrenadeLauncherAttachment->GetComponentLocation(),
+		//GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 100, FColor::Green,
+		//false,-1,0,5);
 	}
 	
 }
