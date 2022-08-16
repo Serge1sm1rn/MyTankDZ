@@ -73,9 +73,12 @@ public:
 
 
 private:
+	void OnReload();
 	void OnShoots();
 	FTimerHandle TimeShoots;
 	FTimerHandle ReloadTimer;
+
+	bool IsReadyToShoot = true;
 
 	FAmmo CurrentAmmo;
 };

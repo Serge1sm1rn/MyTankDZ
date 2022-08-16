@@ -46,12 +46,16 @@ AGrenadeLauncher::AGrenadeLauncher()
 
 	void AGrenadeLauncher::ChangeClip()
 	{
+	
 		CurrentAmmo.Bullets = DefaultAmmo.Bullets;
 		if (!CurrentAmmo.infinite)
 		{
 			CurrentAmmo.Clips --;
 		}
 		UE_LOG(LogTanks, Display, TEXT("------Change Clip-------"),);
+	 
+	
+
 	}
 
 	void AGrenadeLauncher::LogAmmo()
@@ -83,16 +87,25 @@ AGrenadeLauncher::AGrenadeLauncher()
 	void AGrenadeLauncher::FireBurst()
 	{
 	
+		
 		GetWorldTimerManager().SetTimer(TimeShoots,this,&AGrenadeLauncher::OnShoots, TimeShoot);
-	
+
 	}
+
+void AGrenadeLauncher::OnReload()
+{
+	IsReadyToShoot = true;
+
+}
+
 
 void AGrenadeLauncher::OnShoots()
 {
-	if (IsAmmoEmpty())return;
 	
-	GEngine->AddOnScreenDebugMessage(-12, 5, FColor::Blue,
-				FString::Printf(TEXT("FireBurst")) );
+		if (IsAmmoEmpty())return;
+	
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
+					FString::Printf(TEXT("FireBurst")) );
 	
 	DecreaseAmmo();
 }
