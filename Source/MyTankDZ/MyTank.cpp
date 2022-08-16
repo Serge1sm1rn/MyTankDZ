@@ -170,10 +170,10 @@ void AMyTank::Tick(float DeltaTime)
 		CannonAttachment->GetComponentLocation() + CannonAttachment->GetForwardVector() * 100, FColor::Green,
 		false,-1,0,5);
 
-	//	DrawDebugLine(GetWorld(),
-		//GrenadeLauncherAttachment->GetComponentLocation(),
-		//GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 100, FColor::Green,
-		//false,-1,0,5);
+	    DrawDebugLine(GetWorld(),
+		GrenadeLauncherAttachment->GetComponentLocation(),
+		GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 1000, FColor::Yellow,
+		false,-1,0,5);
 	}
 	
 }
