@@ -30,7 +30,7 @@ public:
 private:
 	void OnStartFire();
 	
-	void OnFireBust();
+	void OnFireBurst();
 	
 	void OnStopFire();
 	

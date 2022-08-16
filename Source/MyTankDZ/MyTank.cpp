@@ -68,11 +68,11 @@ void AMyTank::StopFire()
 	
 }
 
-void AMyTank::FireBust()
+void AMyTank::FireBurst()
 {
 	if (GrenadeLauncher)
 	{
-		GrenadeLauncher->FireBust();
+		GrenadeLauncher->FireBurst();
 	}
 }
 

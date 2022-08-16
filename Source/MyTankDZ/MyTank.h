@@ -44,7 +44,7 @@ public:
 	
 	virtual void OnConstruction(const FTransform& Transform) override;
 
-	void FireBust();
+	void FireBurst();
 	void Shoot();
 	void MoveForward(float Scale);
 	void MoveRight(float Scale);

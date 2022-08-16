@@ -46,12 +46,7 @@ void ACannon::Shoot()
 //Alternative shooting
 void ACannon::StartFire()
 {
-	
-	
 		GetWorldTimerManager().SetTimer(TimeShoots,this,&ACannon::OnShoots, TimeShoot, true);
-
-		
-	
 	
 }
 
@@ -112,7 +107,7 @@ void ACannon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	GEngine->AddOnScreenDebugMessage(123, -1, FColor::Red,
-				FString::Printf(TEXT("Reload in %f seconds"),GetWorldTimerManager().GetTimerRemaining(ReloadTimer))  );
+				FString::Printf(TEXT("Reload shoot in %f seconds"),GetWorldTimerManager().GetTimerRemaining(ReloadTimer))  );
 
 }
 

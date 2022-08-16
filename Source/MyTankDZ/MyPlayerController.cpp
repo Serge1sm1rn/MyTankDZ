@@ -15,7 +15,7 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent ->BindAxis("MoveRight", this, &AMyPlayerController::OnMoveRight);
 	InputComponent ->BindAction("Fire",IE_Pressed, this, &AMyPlayerController::OnStartFire);
 	InputComponent ->BindAction("Fire",IE_Released, this, &AMyPlayerController::OnStopFire);
-	InputComponent ->BindAction("FiringBursts",IE_Pressed, this, &AMyPlayerController::OnFireBust);
+	InputComponent ->BindAction("FiringBursts",IE_Pressed, this, &AMyPlayerController::OnFireBurst);
 
 }
 
@@ -51,11 +51,11 @@ void AMyPlayerController::OnStartFire()
 	}
 }
 
-void AMyPlayerController::OnFireBust()
+void AMyPlayerController::OnFireBurst()
 {
 	if (Tank)
 	{
-		Tank->FireBust();
+		Tank->FireBurst();
 	}
 	
 }
