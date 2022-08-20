@@ -5,6 +5,7 @@
 
 
 #include "CoreMinimal.h"
+#include "Projectile.h"
 #include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
 #include "Cannon.generated.h"
@@ -61,6 +62,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	float TimeShoot = 0.1f;
+
+	TSubclassOf<AProjectile> ProjectileClass;
+	
+	//Variable
 	
 	 void Shoot();
 	 void StartFire();
@@ -84,13 +89,19 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	
+
+	//Variable
 	void OnReload();
-	FTimerHandle ReloadTimer;
+	
 	bool IsReadyToShoot = true;
 	
 	void OnShoots();
+	
+	//Timers
 	FTimerHandle TimeShoots;
+	
+	FTimerHandle ReloadTimer;
 
+	//Struct
 	FAmmoData CurrentAmmo;
 };

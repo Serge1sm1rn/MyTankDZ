@@ -6,8 +6,7 @@
 #include "DrawDebugHelpers.h"
 #include "GrenadeLauncher.h"
 #include "MyPlayerController.h"
-#include "MyTankDZ.h"
-#include "Kismet/KismetMaterialLibrary.h"
+
 #include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
@@ -133,6 +132,7 @@ void AMyTank::Tick(float DeltaTime)
 	//UE_LOG(LogTanks,Warning,TEXT("Acceleration %f"), CurrentMoveForwardScale);
 	
 	//MoveForward
+	
 	CurrentMoveForwardScale = FMath::Lerp(CurrentMoveForwardScale, MoveForwardScale, Acceleration);
 
 	auto Location = GetActorLocation();
@@ -140,6 +140,7 @@ void AMyTank::Tick(float DeltaTime)
 	SetActorLocation(NewLocation, true);
 	
 	//MoveRight
+	
 	CurrentMoveRightScale = FMath::Lerp(CurrentMoveRightScale, MoveRightScale, Acceleration);
 
 	auto CurrentLocation = GetActorLocation();
@@ -147,6 +148,7 @@ void AMyTank::Tick(float DeltaTime)
 	SetActorLocation(NewCurrentLocation, true);
 	
 	//Rotation
+	
 	CurrentRotateRightScale = FMath::Lerp(CurrentRotateRightScale, RotateRightScale, Acceleration);
 	
 	auto Rotation = GetActorRotation();
@@ -154,6 +156,7 @@ void AMyTank::Tick(float DeltaTime)
 	SetActorRotation(Rotation);
 
 	//TurretRotation
+	
 	if (TankController)
 	{
 		auto MousePosition = TankController->GetWorldMousePosition();

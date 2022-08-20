@@ -9,10 +9,10 @@ AProjectile::AProjectile()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Collision = CreateDefaultSubobject<UBoxComponent>("Collision");
+	Collision = CreateDefaultSubobject<USphereComponent>("Collision");
 	RootComponent = Collision;
-	Collision->OnComponentBeginOverlap.AddDynamic(this,AProjectile::OnBeginOverLap(UPrimitiveComponent*, AActor*, UPrimitiveComponent*, int, bool,
-																									 const FHitResult&));
+	Collision->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::OnProjectileBeginOverLap);
+	
 
     ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>("ProjectileMesh");
 	ProjectileMesh->SetupAttachment(RootComponent);
@@ -35,8 +35,16 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
-void OnBeginOverLap(UPrimitiveComponent*, AActor*, UPrimitiveComponent*, int, bool,const FHitResult&)
+void AProjectile::OnProjectileBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	
+	if(Other==this)
+	{
+		return;
+	}
+	if (Other)
+	{
+		Other->Destroy();
+	}
+	Destroy();
 }
 

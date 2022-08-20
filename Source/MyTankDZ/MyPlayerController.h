@@ -28,6 +28,8 @@ public:
 		return  WorldMousePosition;
 	}
 private:
+	//Variable
+	
 	void OnStartFire();
 	
 	void OnFireBurst();

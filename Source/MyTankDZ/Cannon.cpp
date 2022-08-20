@@ -4,6 +4,7 @@
 #include "Cannon.h"
 
 #include "MyTankDZ.h"
+#include "Projectile.h"
 
 // Sets default values
 ACannon::ACannon()
@@ -20,7 +21,9 @@ ACannon::ACannon()
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>("ProjectileSpawnPoint");
 	ProjectileSpawnPoint->SetupAttachment(RootComponent);
 }
+
 //Shooting
+
 void ACannon::Shoot()
 {
 	if (!IsReadyToShoot)
@@ -33,6 +36,11 @@ void ACannon::Shoot()
 		case ECannonType::Projectile:
 			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red,
 				FString::Printf(TEXT("Shoot")) );
+			if (true)
+			{
+				GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentTransform());
+			}
+			
 			break;
 		case ECannonType::Trace:
 			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red,
@@ -43,7 +51,9 @@ void ACannon::Shoot()
 	IsReadyToShoot = false;
 	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ACannon::OnReload, ReloadTime);
 }
+
 //Alternative shooting
+
 void ACannon::StartFire()
 {
 		GetWorldTimerManager().SetTimer(TimeShoots,this,&ACannon::OnShoots, TimeShoot, true);
@@ -93,7 +103,6 @@ void ACannon::LogAmmo()
 	UE_LOG(LogTanks, Display, TEXT("%s"), *AmmoInfo);
 }
 
-
 // Called when the game starts or when spawned
 void ACannon::BeginPlay()
 {
@@ -115,6 +124,7 @@ void ACannon::OnReload()
 {
 	IsReadyToShoot = true;
 }
+
 void ACannon::OnShoots()
 {
 	if (IsAmmoEmpty())return;

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
@@ -14,7 +14,7 @@ class MYTANKDZ_API AProjectile : public AActor
 	
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
-	UBoxComponent* Collision;
+	USphereComponent* Collision;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UStaticMeshComponent* ProjectileMesh;
@@ -22,7 +22,7 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
-	UPROPERTY(BlueprintDefaultOnly, EditAnywhere,Category= Components)
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Components)
 	float MovementSpeed = 800;
 	
 	
@@ -37,8 +37,6 @@ public:
 	
 private:
 	UFUNCTION()
-	void OnBeginOverLap(UPrimitiveComponent*, AActor*, UPrimitiveComponent*, int, bool,const FHitResult&)
-	{
-		
-	}
+	void OnProjectileBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
 };
