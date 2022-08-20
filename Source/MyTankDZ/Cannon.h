@@ -62,7 +62,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	float TimeShoot = 0.1f;
-
+	
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	TSubclassOf<AProjectile> ProjectileClass;
 	
 	//Variable

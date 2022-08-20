@@ -36,9 +36,13 @@ void ACannon::Shoot()
 		case ECannonType::Projectile:
 			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red,
 				FString::Printf(TEXT("Shoot")) );
-			if (true)
+			if (ProjectileClass)
 			{
-				GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentTransform());
+				FActorSpawnParameters SpawnParameters;
+				SpawnParameters.Owner = this;
+				SpawnParameters.Instigator = GetInstigator();
+				
+				GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentTransform(), SpawnParameters);
 			}
 			
 			break;

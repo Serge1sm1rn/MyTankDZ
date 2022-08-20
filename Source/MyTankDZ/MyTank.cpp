@@ -113,7 +113,10 @@ void AMyTank::BeginPlay()
 
 	if (CannonClass)
 	{
-		 Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass);
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = this;
+		SpawnParameters.Instigator = this;
+		Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass, SpawnParameters);
 		Cannon->AttachToComponent(CannonAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
 
