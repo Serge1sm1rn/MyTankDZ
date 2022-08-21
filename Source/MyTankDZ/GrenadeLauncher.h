@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "GrenadeLauncher.generated.h"
 
+class AProjectile;
 USTRUCT(BlueprintType)
 struct FAmmo
 {
@@ -38,6 +39,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* GrenadeSpawnPoint;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UArrowComponent* ProjectileSpawnPoint;
 
 	
 
@@ -49,6 +53,13 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
 	int NumShoot = 3;
+	
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	TSubclassOf<AProjectile> ProjectileClass;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	float TraceDistance = 1000;
+	
 	
 	// Sets default values for this actor's properties
 	AGrenadeLauncher();
