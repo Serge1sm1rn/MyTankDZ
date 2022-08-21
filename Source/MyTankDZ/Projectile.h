@@ -24,8 +24,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Components)
 	float MovementSpeed = 800;
-	
-	
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Components)
+	float FlyDistance = 2000;	
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,6 +37,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 private:
+	
+	FVector StartLocation;
+	
 	UFUNCTION()
 	void OnProjectileBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	

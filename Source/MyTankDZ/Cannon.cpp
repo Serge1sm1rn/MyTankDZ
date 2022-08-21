@@ -3,6 +3,7 @@
 
 #include "Cannon.h"
 
+#include "DrawDebugHelpers.h"
 #include "MyTankDZ.h"
 #include "Projectile.h"
 
@@ -46,9 +47,32 @@ void ACannon::Shoot()
 			}
 			
 			break;
+			
 		case ECannonType::Trace:
 			GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red,
 				FString::Printf(TEXT("Trace")) );
+			
+			FHitResult HitResult;
+			FCollisionQueryParams Params;
+			
+			Params.AddIgnoredActor(this);
+			Params.AddIgnoredActor(GetInstigator());
+
+			auto Start = ProjectileSpawnPoint->GetComponentLocation();
+			auto End = ProjectileSpawnPoint->GetComponentLocation() + ProjectileSpawnPoint ->GetForwardVector() * TraceDistance;
+
+			if(GetWorld()->LineTraceSingleByChannel(HitResult,
+				Start,
+				End,
+				ECollisionChannel::ECC_Visibility))
+			{
+				if(HitResult.Actor.IsValid())
+				{
+					HitResult.Actor->Destroy();
+				}
+			}
+
+				DrawDebugLine(GetWorld(), Start, End, FColor::Cyan, false,0.5f);
 			break;
 		}
 	

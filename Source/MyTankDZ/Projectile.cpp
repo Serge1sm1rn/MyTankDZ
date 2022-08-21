@@ -23,7 +23,8 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	StartLocation = GetActorLocation();
 }
 
 // Called every frame
@@ -33,6 +34,10 @@ void AProjectile::Tick(float DeltaTime)
 
 	SetActorLocation(GetActorLocation() + GetActorForwardVector() * MovementSpeed * DeltaTime,true);
 
+	if (FVector::DistXY(StartLocation,GetActorLocation()) > FlyDistance)
+	{
+		Destroy();
+	}
 }
 
 void AProjectile::OnProjectileBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

@@ -65,7 +65,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	TSubclassOf<AProjectile> ProjectileClass;
-	
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	float TraceDistance = 1000;
 	//Variable
 	
 	 void Shoot();
