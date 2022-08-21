@@ -106,26 +106,45 @@ void AMyTank::PossessedBy(AController* NewController)
 	TankController = Cast<AMyPlayerController>(NewController);
 }
 
+
+
+
 // Called when the game starts or when spawned
 void AMyTank::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (CannonClass)
-	{
-		FActorSpawnParameters SpawnParameters;
-		SpawnParameters.Owner = this;
-		SpawnParameters.Instigator = this;
-		Cannon = GetWorld()->SpawnActor<ACannon>(CannonClass, SpawnParameters);
-		Cannon->AttachToComponent(CannonAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
-	}
-
+	SetupCannon(CannonClass);
+    
 	if (GrenadeLauncherClass)
 	{
 		GrenadeLauncher = GetWorld()->SpawnActor<AGrenadeLauncher>(GrenadeLauncherClass);
 		GrenadeLauncher->AttachToComponent(GrenadeLauncherAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
 }
+void AMyTank::SetupCannon(TSubclassOf<ACannon> InCannonClass)
+{
+		if(Cannon)
+		{
+			Cannon->Destroy();
+			Cannon = nullptr;
+		}
+		if (InCannonClass)
+		{
+			FActorSpawnParameters SpawnParameters;
+			SpawnParameters.Owner = this;
+			SpawnParameters.Instigator = this;
+			Cannon = GetWorld()->SpawnActor<ACannon>(InCannonClass, SpawnParameters);
+			Cannon->AttachToComponent(CannonAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
+		}
+}
+
+	
+
+/*void AMyTank::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+}*/
+
 
 // Called every frame
 void AMyTank::Tick(float DeltaTime)
@@ -190,4 +209,14 @@ void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+void AMyTank::Destroyed()
+{
+	if (Cannon)
+	{
+		Cannon->Destroy();
+	}
+}
+
+
+
 

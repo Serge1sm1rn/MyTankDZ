@@ -73,10 +73,13 @@ public:
 	TSubclassOf<AGrenadeLauncher> GrenadeLauncherClass;
 
 	virtual void PossessedBy(AController* NewController) override;
-
+	
+	void SetupCannon(TSubclassOf<ACannon> InCannonClass);
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
 
 public:	
 	// Called every frame
@@ -84,6 +87,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void Destroyed();
 
 	float MoveForwardScale = 0;
 	float MoveRightScale = 0;
