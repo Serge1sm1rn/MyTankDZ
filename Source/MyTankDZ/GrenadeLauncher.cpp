@@ -3,6 +3,7 @@
 
 #include "GrenadeLauncher.h"
 #include "MyTankDZ.h"
+#include "Projectile.h"
 #include "Components/ArrowComponent.h"
 
 // Sets default values
@@ -101,11 +102,19 @@ void AGrenadeLauncher::OnReload()
 
 void AGrenadeLauncher::OnShoots()
 {
-	
 		if (IsAmmoEmpty())return;
 	
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
 					FString::Printf(TEXT("FireBurst")) );
+
+	if (ProjectileClass)
+	{
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = this;
+		SpawnParameters.Instigator = GetInstigator();
+				
+		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentTransform(), SpawnParameters);
+	}
 	
 	DecreaseAmmo();
 }
