@@ -36,6 +36,7 @@ void AGunBox::Tick(float DeltaTime)
 void AGunBox::OnProjectileBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	auto Tank = Cast<AMyTank>(Other);
+	
 	if (Tank)
 	{
 		Tank->SetupCannon(CannonClass.Get());
