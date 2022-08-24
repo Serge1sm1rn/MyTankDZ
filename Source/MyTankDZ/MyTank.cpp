@@ -114,10 +114,20 @@ void AMyTank::BeginPlay()
 {
 	Super::BeginPlay();
 	SetupCannon(CannonClass);
-    
+
+	if(GrenadeLauncher)
+	{
+		GrenadeLauncher->Destroy();
+		GrenadeLauncher = nullptr;
+	}
+	
 	if (GrenadeLauncherClass)
 	{
-		GrenadeLauncher = GetWorld()->SpawnActor<AGrenadeLauncher>(GrenadeLauncherClass);
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = this;
+		SpawnParameters.Instigator = GetInstigator();
+		
+		GrenadeLauncher = GetWorld()->SpawnActor<AGrenadeLauncher>(GrenadeLauncherClass, SpawnParameters);
 		GrenadeLauncher->AttachToComponent(GrenadeLauncherAttachment, FAttachmentTransformRules::SnapToTargetIncludingScale);
 	}
 }

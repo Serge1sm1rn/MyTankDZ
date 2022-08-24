@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "GrenadeLauncher.generated.h"
 
+
 class AProjectile;
 USTRUCT(BlueprintType)
 struct FAmmo
@@ -31,6 +32,7 @@ class MYTANKDZ_API AGrenadeLauncher : public AActor
 	GENERATED_BODY()
 	
 public:
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	USceneComponent* DefaultRoot;
 	
@@ -40,31 +42,27 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* GrenadeSpawnPoint;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
-	UArrowComponent* ProjectileSpawnPoint;
-
-	
-
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
-	float ReloadTime = 1;
-
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
-	float TimeShoot = 0.1f;
-
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
-	int NumShoot = 3;
-	
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
-	TSubclassOf<AProjectile> ProjectileClass;
-
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
-	float TraceDistance = 1000;
-	
-	
 	// Sets default values for this actor's properties
 	AGrenadeLauncher();
 
+		UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
+    	float ReloadTime = 1;
+    
+    	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
+    	float TimeShoot = 0.1f;
+    
+    	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Shoots)
+    	int NumShoot = 3;
+
+		UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+		TSubclassOf<AProjectile> GrenadeClass;
+	
+		UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+		float TraceDistance = 1000;
+                         	
+
 protected:
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= "Weapon")
 	FAmmo DefaultAmmo{10,10,false};
 	
@@ -84,8 +82,10 @@ public:
 
 
 private:
+	
 	void OnReload();
 	void OnShoots();
+	
 	FTimerHandle TimeShoots;
 	FTimerHandle ReloadTimer;
 

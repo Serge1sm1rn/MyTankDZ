@@ -78,11 +78,7 @@ AGrenadeLauncher::AGrenadeLauncher()
 	// Called every frame
 	void AGrenadeLauncher::Tick(float DeltaTime)
 	{
-		Super::Tick(DeltaTime);
-		GEngine->AddOnScreenDebugMessage(12, -1, FColor::Blue,
-		                                 FString::Printf(
-			                                 TEXT("Reload grenade launcher in %f seconds"),
-			                                 GetWorldTimerManager().GetTimerRemaining(ReloadTimer)));
+		
 	}
 
 	void AGrenadeLauncher::FireBurst()
@@ -102,19 +98,20 @@ void AGrenadeLauncher::OnReload()
 
 void AGrenadeLauncher::OnShoots()
 {
-		if (IsAmmoEmpty())return;
-	
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
-					FString::Printf(TEXT("FireBurst")) );
-
-	if (ProjectileClass)
+	if (IsAmmoEmpty())return;
+	if (GrenadeClass)
 	{
 		FActorSpawnParameters SpawnParameters;
 		SpawnParameters.Owner = this;
 		SpawnParameters.Instigator = GetInstigator();
 				
-		GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentTransform(), SpawnParameters);
+		GetWorld()->SpawnActor<AProjectile>(GrenadeClass, GrenadeSpawnPoint->GetComponentTransform(), SpawnParameters);
 	}
+	
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
+					FString::Printf(TEXT("FireBurst")) );
+
+	
 	
 	DecreaseAmmo();
 }
