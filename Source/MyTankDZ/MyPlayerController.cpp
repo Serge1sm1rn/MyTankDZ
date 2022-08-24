@@ -16,7 +16,7 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent ->BindAction("Fire",IE_Pressed, this, &AMyPlayerController::OnStartFire);
 	InputComponent ->BindAction("Fire",IE_Released, this, &AMyPlayerController::OnStopFire);
 	InputComponent ->BindAction("FiringBursts",IE_Pressed, this, &AMyPlayerController::OnFireBurst);
-
+	InputComponent ->BindAction("SwitchWeapon", EInputEvent::IE_Pressed,this, &AMyPlayerController::OnSwitchWeapon);
 }
 
 void AMyPlayerController::OnPossess(APawn* InPawn)
@@ -41,6 +41,14 @@ void AMyPlayerController::Tick(float DeltaSeconds)
 		WorldMousePosition = MousePosition-MouseDirection * Z / MouseDirection.Z;
 	}
 	
+}
+
+void AMyPlayerController::OnSwitchWeapon()
+{
+	if (Tank)
+	{
+		Tank->SwitchWeapon();
+	}
 }
 
 void AMyPlayerController::OnStartFire()

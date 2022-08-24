@@ -30,6 +30,8 @@ public:
 private:
 	//Variable
 	
+	void OnSwitchWeapon();
+	
 	void OnStartFire();
 	
 	void OnFireBurst();

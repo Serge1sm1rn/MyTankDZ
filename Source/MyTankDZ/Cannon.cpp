@@ -93,6 +93,21 @@ void ACannon::StopFire()
 	GetWorldTimerManager().ClearTimer(TimeShoots);
 }
 
+//SWITCH WEAPON
+
+void ACannon::SwitchWeapon()
+{
+	if (static_cast<bool>(CannonType = ECannonType::Projectile)) 
+	{
+		CannonType = ECannonType::Trace;
+	}
+
+	if (static_cast<bool>(CannonType = ECannonType::Trace)) 
+	{
+		CannonType = ECannonType::Projectile;
+	}
+}
+
 void ACannon::DecreaseAmmo()
 {
 	CurrentAmmo.Bullets --;

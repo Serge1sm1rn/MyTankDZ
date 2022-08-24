@@ -105,6 +105,13 @@ void AMyTank::PossessedBy(AController* NewController)
 
 	TankController = Cast<AMyPlayerController>(NewController);
 }
+void AMyTank::SwitchWeapon()
+{
+	if (Cannon)
+	{
+		Cannon->SwitchWeapon();
+	}
+}
 
 
 
