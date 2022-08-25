@@ -73,7 +73,7 @@ public:
 	 void Shoot();
 	 void StartFire();
 	 void StopFire();
-	void SwitchWeapon();
+	
 
 protected:
 	//Assigning parameters ammo

@@ -51,7 +51,7 @@ public:
 	void RotateRight(float Scale);
 	void StartFire();
 	void StopFire();
-	void SwitchWeapon();
+	
 
 
 

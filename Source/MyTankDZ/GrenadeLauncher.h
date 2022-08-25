@@ -9,6 +9,7 @@
 
 
 class AProjectile;
+
 USTRUCT(BlueprintType)
 struct FAmmo
 {
