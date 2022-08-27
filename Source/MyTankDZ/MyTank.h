@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "DamageTaker.h"
 #include "GrenadeLauncher.h"
 #include "Camera/CameraComponent.h"
 #include "Components/ArrowComponent.h"
@@ -13,7 +14,7 @@
 #include "MyTank.generated.h"
 
 UCLASS()
-class MYTANKDZ_API AMyTank : public APawn
+class MYTANKDZ_API AMyTank : public APawn , public IDamageTaker
 {
 	GENERATED_BODY()
 
@@ -86,10 +87,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void TakeDamage(FDamageData Damage) override;
+
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void Destroyed();
 
+private:
 	float MoveForwardScale = 0;
 	float MoveRightScale = 0;
 	float RotateRightScale = 0;

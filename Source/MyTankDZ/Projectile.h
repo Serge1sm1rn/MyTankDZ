@@ -26,7 +26,10 @@ public:
 	float MovementSpeed = 800;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Components)
-	float FlyDistance = 2000;	
+	float FlyDistance = 2000;
+	
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Components)
+	float Damage = 1;
 
 protected:
 	// Called when the game starts or when spawned

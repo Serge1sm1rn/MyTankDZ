@@ -68,6 +68,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	float TraceDistance = 1000;
+	
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	float TraceDamage = 1;
 	//Variable
 	
 	 void Shoot();

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Cannon.h"
+#include "DamageTaker.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
@@ -11,7 +12,7 @@
 
 
 UCLASS()
-class MYTANKDZ_API ATurret : public APawn
+class MYTANKDZ_API ATurret : public APawn , public IDamageTaker
 {
 	GENERATED_BODY()
 	
@@ -52,6 +53,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void TakeDamage(FDamageData Damage) override;
+	
 private:
 
 	UFUNCTION()

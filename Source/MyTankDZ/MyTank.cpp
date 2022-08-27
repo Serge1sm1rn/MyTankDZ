@@ -228,6 +228,9 @@ void AMyTank::Destroyed()
 	}
 }
 
-
+void AMyTank::TakeDamage(FDamageData Damage)
+{
+	
+}
 
 

@@ -60,6 +60,8 @@ void ATurret::Tick(float DeltaTime)
 	}
 }
 
+
+
 void ATurret::Targeting()
 {
 	if (!CurrentTarget.IsValid())
@@ -143,6 +145,11 @@ void ATurret::FindBestTarget()
 		}
 	}
 	CurrentTarget = NewTarget;
+}
+
+void ATurret::TakeDamage(FDamageData Damage)
+{
+	
 }
 
 
