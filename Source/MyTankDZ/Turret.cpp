@@ -3,6 +3,9 @@
 
 #include "Turret.h"
 
+#include "MyTank.h"
+#include "Kismet/KismetMathLibrary.h"
+
 // Sets default values
 ATurret::ATurret()
 {
@@ -23,6 +26,8 @@ ATurret::ATurret()
 
 	TargetRange = CreateDefaultSubobject<USphereComponent>("TargetRange");
 	TargetRange->SetupAttachment(Collision);
+	TargetRange->OnComponentBeginOverlap.AddDynamic(this, &ATurret::OnTargetRangeBeginOverLap);
+	TargetRange->OnComponentEndOverlap.AddDynamic(this, &ATurret::OnTargetRangeEndOverLap);
 
 }
 
@@ -46,6 +51,99 @@ void ATurret::BeginPlay()
 void ATurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	Targeting();
+
+	if (Cannon && CanFire())
+	{
+		Cannon->Shoot();
+	}
+}
+
+void ATurret::Targeting()
+{
+	if (!CurrentTarget.IsValid())
+	{
+		return;
+	}
+	auto Rotation =  UKismetMathLibrary::FindLookAtRotation(TurretMesh->GetComponentLocation(),CurrentTarget->GetActorLocation());
+	auto CurrentRotation = TurretMesh->GetComponentRotation();
+	Rotation.Pitch = CurrentRotation.Pitch;
+	Rotation.Roll = CurrentRotation.Roll;
+	CurrentRotation = FMath::Lerp(CurrentRotation, Rotation, TurretRotationSpeed);
+	TurretMesh->SetWorldRotation(CurrentRotation);
+}
+
+bool ATurret::CanFire()
+{
+	if (!CurrentTarget.IsValid())
+	{
+		return false;
+	}
+	auto Rotation =  UKismetMathLibrary::FindLookAtRotation(TurretMesh->GetComponentLocation(),CurrentTarget->GetActorLocation());
+	auto CurrentRotation = TurretMesh->GetComponentRotation();
+	
+	if (FMath::Abs(Rotation.Yaw - CurrentRotation.Yaw) <= Accuracy)
+	{
+		return true;
+	}
+	return false;
+}
+
+void ATurret::OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
+                                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Other == this || Other == GetInstigator())
+	{
+		return;
+	}
+	if (Other->IsA<AMyTank>())
+	{
+		return;
+	}
+	Targets.Add(Other);
+	FindBestTarget();
 
 }
+
+void ATurret::OnTargetRangeEndOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (Other == this || Other == GetInstigator())
+	{
+		return;
+	}
+	if (Other->IsA<AMyTank>())
+	{
+		return;
+	}
+	Targets.Remove(Other);
+	if (Other == CurrentTarget)
+	{
+		FindBestTarget();
+	}
+}
+
+void ATurret::FindBestTarget()
+{
+	float MinDistance = 100000000;
+	auto Location = GetActorLocation();
+	AActor* NewTarget = nullptr;
+	for (auto Target : Targets)
+	{
+		if (Target.IsValid())
+		{
+			auto Distance = FVector::DistXY(Location, Target->GetActorLocation());
+			
+			if(Distance < MinDistance)
+			{
+				MinDistance = Distance;
+				NewTarget = Target.Get();
+			}
+		}
+	}
+	CurrentTarget = NewTarget;
+}
+
+
 

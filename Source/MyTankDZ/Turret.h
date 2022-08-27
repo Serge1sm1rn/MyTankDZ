@@ -39,6 +39,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
 	TSubclassOf<ACannon> CannonClass;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	float TurretRotationSpeed = 0.1f;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	float Accuracy = 10;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -47,6 +53,24 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 private:
+
+	UFUNCTION()
+	void OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnTargetRangeEndOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	void FindBestTarget();
+
+	void Targeting();
+
+	bool CanFire();
+	
+	
 	UPROPERTY()
 	ACannon* Cannon;
+
+	TArray<TWeakObjectPtr<AActor>>Targets;
+	TWeakObjectPtr<AActor>CurrentTarget;
+
 };
