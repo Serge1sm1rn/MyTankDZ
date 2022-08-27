@@ -93,11 +93,11 @@ bool ATurret::CanFire()
 void ATurret::OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
                                         UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Other == this || Other == GetInstigator())
+	if (Other == this || Other == GetInstigator()|| Other ==nullptr)
 	{
 		return;
 	}
-	if (Other->IsA<AMyTank>())
+	if (!Other->IsA<AMyTank>())
 	{
 		return;
 	}
@@ -113,7 +113,7 @@ void ATurret::OnTargetRangeEndOverLap(UPrimitiveComponent* OverlappedComp, AActo
 	{
 		return;
 	}
-	if (Other->IsA<AMyTank>())
+	if (!Other->IsA<AMyTank>())
 	{
 		return;
 	}
