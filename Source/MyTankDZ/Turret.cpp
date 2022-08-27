@@ -29,6 +29,10 @@ ATurret::ATurret()
 	TargetRange->OnComponentBeginOverlap.AddDynamic(this, &ATurret::OnTargetRangeBeginOverLap);
 	TargetRange->OnComponentEndOverlap.AddDynamic(this, &ATurret::OnTargetRangeEndOverLap);
 
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
+	HealthComponent->OnDamaged.AddUObject(this, &ATurret::OnDamaged);
+	HealthComponent->OnDeath.AddUObject(this, &ATurret::OnDeath);
+
 }
 
 // Called when the game starts or when spawned
@@ -149,7 +153,23 @@ void ATurret::FindBestTarget()
 
 void ATurret::TakeDamage(FDamageData Damage)
 {
-	
+	HealthComponent->TakeDamage(Damage);
+}
+void ATurret::OnDamaged(FDamageData Damage)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("Turret health %f"), HealthComponent->CurrentHealth));
+}
+
+void ATurret::OnDeath()
+{
+	Destroy();
+}
+void ATurret::Destroyed()
+{
+	if (Cannon)
+	{
+		Cannon->Destroy();
+	}
 }
 
 

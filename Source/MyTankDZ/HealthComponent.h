@@ -3,18 +3,34 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DamageTaker.h"
 #include "Components/ActorComponent.h"
-#include "MyActorComponent.generated.h"
+#include "HealthComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class MYTANKDZ_API UMyActorComponent : public UActorComponent
+class MYTANKDZ_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
-
-public:	
+	
+	DECLARE_EVENT(UHealthComponent, FOnDeath);
+	DECLARE_EVENT_OneParam(UHealthComponent, FOnDamaged, FDamageData);
+	
+public:
+	
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Health)
+	float MaxHealth = 10;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Health)
+	float CurrentHealth;
+	
 	// Sets default values for this component's properties
-	UMyActorComponent();
+	UHealthComponent();
+	
+	void TakeDamage(FDamageData Damage);
+
+	FOnDeath OnDeath;
+	FOnDamaged OnDamaged;
 
 protected:
 	// Called when the game starts

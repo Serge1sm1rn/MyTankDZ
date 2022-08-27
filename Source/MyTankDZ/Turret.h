@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Cannon.h"
 #include "DamageTaker.h"
+#include "HealthComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
@@ -33,7 +34,12 @@ public:
         
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* CannonAttachment;
-        	
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UHealthComponent* HealthComponent;
+
+
+	
 	// Sets default values for this actor's properties
 	ATurret();
 	
@@ -55,6 +61,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void TakeDamage(FDamageData Damage) override;
+
+	virtual void Destroyed();
 	
 private:
 
@@ -69,7 +77,10 @@ private:
 	void Targeting();
 
 	bool CanFire();
-	
+
+	void OnDamaged(FDamageData Damage);
+
+	void OnDeath();
 	
 	UPROPERTY()
 	ACannon* Cannon;

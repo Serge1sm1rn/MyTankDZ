@@ -6,6 +6,7 @@
 #include "Cannon.h"
 #include "DamageTaker.h"
 #include "GrenadeLauncher.h"
+#include "HealthComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
@@ -39,6 +40,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* GrenadeLauncherAttachment;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	UHealthComponent* HealthComponent;
 	
 	// Sets default values for this pawn's properties
 	AMyTank();
@@ -92,9 +96,13 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	void Destroyed();
+	virtual void Destroyed();
 
 private:
+	
+	void OnDamaged(FDamageData Damage);
+	void OnDeath();
+	
 	float MoveForwardScale = 0;
 	float MoveRightScale = 0;
 	float RotateRightScale = 0;

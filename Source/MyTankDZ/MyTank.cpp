@@ -5,9 +5,10 @@
 
 #include "DrawDebugHelpers.h"
 #include "GrenadeLauncher.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "MyPlayerController.h"
 
-#include "Kismet/KismetMathLibrary.h"
+
 
 // Sets default values
 AMyTank::AMyTank()
@@ -40,6 +41,10 @@ AMyTank::AMyTank()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(Arm);
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
+	HealthComponent->OnDamaged.AddUObject(this, &AMyTank::OnDamaged);
+	HealthComponent->OnDeath.AddUObject(this, &AMyTank::OnDeath);
 	
 }
 
@@ -226,11 +231,24 @@ void AMyTank::Destroyed()
 	{
 		Cannon->Destroy();
 	}
+	if (GrenadeLauncher)
+     	{
+     		GrenadeLauncher->Destroy();
+     	}
 }
 
 void AMyTank::TakeDamage(FDamageData Damage)
 {
-	
+	HealthComponent->TakeDamage(Damage);
+}
+void AMyTank::OnDamaged(FDamageData Damage)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, FString::Printf(TEXT("Tank health %f"), HealthComponent->CurrentHealth));
+}
+
+void AMyTank::OnDeath()
+{
+	Destroy();
 }
 
 
