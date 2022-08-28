@@ -3,6 +3,7 @@
 
 #include "Cannon.h"
 
+#include "DamageTaker.h"
 #include "DrawDebugHelpers.h"
 #include "MyTankDZ.h"
 #include "Projectile.h"
@@ -60,13 +61,29 @@ void ACannon::Shoot()
 
 			auto Start = ProjectileSpawnPoint->GetComponentLocation();
 			auto End = ProjectileSpawnPoint->GetComponentLocation() + ProjectileSpawnPoint ->GetForwardVector() * TraceDistance;
-
+			
+			
 			if(GetWorld()->LineTraceSingleByChannel(HitResult,
 				Start,
 				End,
 				ECollisionChannel::ECC_Visibility))
 			{
-				if(HitResult.Actor.IsValid())
+				if(HitResult.Actor==this || GetInstigator()==HitResult.Actor)
+				{
+					return;
+				}
+				
+				auto Damageble =  Cast<IDamageTaker>(HitResult.Actor);
+				
+				if (Damageble)
+				{
+					FDamageData Data;
+					Data.DamageMaker = this;
+					Data.DamageValue = TraceDamage;
+					Data.Instigator = GetInstigator();
+					Damageble->TakeDamage(Data);
+				}
+				else
 				{
 					HitResult.Actor->Destroy();
 				}
