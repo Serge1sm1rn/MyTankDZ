@@ -14,8 +14,8 @@ class MYTANKDZ_API APatrollingPoint : public AActor
 public:	
 	// Sets default values for this actor's properties
 	APatrollingPoint();
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=comp);
-	int Index;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=Patrolling);
+	int Index = -1;
 
 protected:
 	// Called when the game starts or when spawned
