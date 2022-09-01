@@ -42,6 +42,11 @@ AMyTank::AMyTank()
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(Arm);
 
+	TargetRange = CreateDefaultSubobject<USphereComponent>("TargetRange");
+	TargetRange->SetupAttachment(Collision);
+	TargetRange->OnComponentBeginOverlap.AddDynamic(this, &AMyTank::OnTargetRangeBeginOverLap);
+	TargetRange->OnComponentEndOverlap.AddDynamic(this, &AMyTank::OnTargetRangeEndOverLap);
+	
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 	HealthComponent->OnDamaged.AddUObject(this, &AMyTank::OnDamaged);
 	HealthComponent->OnDeath.AddUObject(this, &AMyTank::OnDeath);
@@ -251,4 +256,40 @@ void AMyTank::OnDeath()
 	Destroy();
 }
 
+void AMyTank::OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
+										UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Other == this || Other == GetInstigator()|| Other ==nullptr)
+	{
+		return;
+	}
+	if (!Other->IsA<AMyTank>())
+	{
+		return;
+	}
+	Targets.Add(Other);
+	
+	OnTargetsChanged.Broadcast();
+	
+
+
+}
+
+void AMyTank::OnTargetRangeEndOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (Other == this || Other == GetInstigator())
+	{
+		return;
+	}
+	if (!Other->IsA<AMyTank>())
+	{
+		return;
+	}
+	Targets.Remove(Other);
+
+	OnTargetsChanged.Broadcast();
+
+	
+}
 

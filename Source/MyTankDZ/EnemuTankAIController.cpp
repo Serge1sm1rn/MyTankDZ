@@ -4,6 +4,7 @@
 #include "EnemuTankAIController.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 void AEnemuTankAIController::OnPossess(APawn* InPawn)
 {
@@ -14,6 +15,8 @@ void AEnemuTankAIController::OnPossess(APawn* InPawn)
   {
 	 PatrollingPointTag = TankPawn -> PatrollingPointTag;
   	RebuildMayPoints();
+
+  	TankPawn->OnTargetsChanged.AddUObject(this, &AEnemuTankAIController::OnTargetsChanged);
   }
 }
  void AEnemuTankAIController::Tick(float DeltaSeconds)
@@ -58,6 +61,11 @@ void AEnemuTankAIController::OnPossess(APawn* InPawn)
    if (FVector::Dist2D(PointLocation,Location) < MovementAccuracy)
    {
 	   CurrentWayPointIndex++;
+   }
+
+   if (CanFire())
+   {
+	   TankPawn->Shoot();
    }
 	
  }
@@ -106,4 +114,49 @@ void AEnemuTankAIController::RebuildMayPoints()
 		FColor::Green, false,20);
 
 	}
+}
+
+void AEnemuTankAIController::OnTargetsChanged()
+{
+	FindBestTarget();
+	
+}
+void AEnemuTankAIController::FindBestTarget()
+{
+	if (!TankPawn)
+	{
+		return;
+	}
+	float MinDistance = 100000000;
+	auto Location = TankPawn->GetActorLocation();
+	AActor* NewTarget = nullptr;
+	for (auto Target : TankPawn-> GetPossibleTargets())
+	{
+		if (Target.IsValid())
+		{
+			auto Distance = FVector::DistXY(Location, Target->GetActorLocation());
+			
+			if(Distance < MinDistance)
+			{
+				MinDistance = Distance;
+				NewTarget = Target.Get();
+			}
+		}
+	}
+	CurrentTarget = NewTarget;
+}
+bool AEnemuTankAIController::CanFire()
+{
+	if (!CurrentTarget.IsValid() ||!TankPawn)
+	{
+		return false;
+	}
+	auto Rotation =  UKismetMathLibrary::FindLookAtRotation( TankPawn->TurretMesh->GetComponentLocation(),CurrentTarget->GetActorLocation());
+	auto CurrentRotation = TankPawn->TurretMesh->GetComponentRotation();
+	
+	if (FMath::Abs(Rotation.Yaw - CurrentRotation.Yaw) <= Accuracy)
+	{
+		return true;
+	}
+	return false;
 }

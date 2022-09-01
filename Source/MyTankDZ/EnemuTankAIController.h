@@ -24,18 +24,25 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=Patrolling);
 	float MovementAccuracy = 10;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
+	float Accuracy = 10;
 	
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
 
 private:
+	void FindBestTarget();
+	bool CanFire();
 	void RebuildMayPoints();
+	void OnTargetsChanged();
 	
 	AMyTank* TankPawn;
 
 	int CurrentWayPointIndex = 0;
 	
 	TArray<TWeakObjectPtr<APatrollingPoint>> PatrollingPoints;
+	TWeakObjectPtr<AActor>CurrentTarget;
 	
 };

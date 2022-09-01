@@ -19,6 +19,8 @@ class MYTANKDZ_API AMyTank : public APawn , public IDamageTaker
 {
 	GENERATED_BODY()
 
+	DECLARE_EVENT(AMyTank, FOnTargetsChanged);
+
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UBoxComponent* Collision;
@@ -28,6 +30,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UStaticMeshComponent* TurretMesh;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
+	USphereComponent* TargetRange;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	USpringArmComponent* Arm;
@@ -84,6 +89,8 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	
 	void SetupCannon(TSubclassOf<ACannon> InCannonClass);
+
+	FOnTargetsChanged OnTargetsChanged;
 	
 protected:
 	// Called when the game starts or when spawned
@@ -101,6 +108,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Destroyed();
 
+	const TArray<TWeakObjectPtr<AActor>>& GetPossibleTargets() const
+	{
+		return Targets;
+	}
+
 private:
 	
 	void OnDamaged(FDamageData Damage);
@@ -116,8 +128,16 @@ private:
 
 	class AMyPlayerController* TankController;
 
+	UFUNCTION()
+	void OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnTargetRangeEndOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
 	UPROPERTY()
 	ACannon* Cannon;
 	AGrenadeLauncher* GrenadeLauncher;
-
+	
+	TArray<TWeakObjectPtr<AActor>>Targets;
 };
