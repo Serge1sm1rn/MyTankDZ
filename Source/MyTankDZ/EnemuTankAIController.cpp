@@ -19,6 +19,47 @@ void AEnemuTankAIController::OnPossess(APawn* InPawn)
  void AEnemuTankAIController::Tick(float DeltaSeconds)
  {
    Super::Tick(DeltaSeconds);
+
+   if (!TankPawn || PatrollingPoints.Num() < 2)
+   {
+	   return;
+   }
+   if (CurrentWayPointIndex >= PatrollingPoints.Num() || PatrollingPoints.Num() < 0)
+   {
+	   CurrentWayPointIndex = 0;
+   }
+	
+	TankPawn->MoveForward(1);
+
+	auto Point = PatrollingPoints[CurrentWayPointIndex];
+	auto PointLocation = Point->GetActorLocation();
+	auto Location = TankPawn->GetActorLocation();
+
+	auto MovementDirection = PointLocation - Location;
+	MovementDirection.Normalize();
+
+	auto ForwardAngle = FMath::RadiansToDegrees( FMath::Acos(FVector::DotProduct(TankPawn->GetActorForwardVector(), MovementDirection)));
+	auto RightAngle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(TankPawn->GetActorRightVector(), MovementDirection)));
+	float RotationValue = 0;
+
+	if (ForwardAngle > 5) RotationValue = 1;
+	if (RightAngle > 90) RotationValue = -RotationValue;
+   if (ForwardAngle > 45 )
+   {
+	   TankPawn->MoveForward(0);
+   }
+   else
+   {
+   	TankPawn->MoveForward(1);
+   }
+
+	TankPawn-> RotateRight(RotationValue);
+	
+   if (FVector::Dist2D(PointLocation,Location) < MovementAccuracy)
+   {
+	   CurrentWayPointIndex++;
+   }
+	
  }
  void AEnemuTankAIController::BeginPlay()
  {
