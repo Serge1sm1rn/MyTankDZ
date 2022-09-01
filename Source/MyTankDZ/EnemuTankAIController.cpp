@@ -8,6 +8,13 @@
 void AEnemuTankAIController::OnPossess(APawn* InPawn)
 {
   Super::OnPossess(InPawn);
+
+	TankPawn = Cast<AMyTank>(InPawn);
+  if (TankPawn)
+  {
+	 PatrollingPointTag = TankPawn -> PatrollingPointTag;
+  	RebuildMayPoints();
+  }
 }
  void AEnemuTankAIController::Tick(float DeltaSeconds)
  {
@@ -16,6 +23,11 @@ void AEnemuTankAIController::OnPossess(APawn* InPawn)
  void AEnemuTankAIController::BeginPlay()
  {
 	Super::BeginPlay();
+	RebuildMayPoints();
+ }
+
+void AEnemuTankAIController::RebuildMayPoints()
+{
 	PatrollingPoints.Empty();
 	
 	TArray<AActor*> Actors;
@@ -48,8 +60,9 @@ void AEnemuTankAIController::OnPossess(APawn* InPawn)
 	if (PatrollingPoints.Num() > 1)
 	{
 		DrawDebugLine(GetWorld(),
-			PatrollingPoints[0]->GetActorLocation() + FVector(0,0,20),
-			PatrollingPoints[PatrollingPoints.Num() - 1]->GetActorLocation() + FVector(0,0,20),
-			FColor::Green, false,20);
+		PatrollingPoints[0]->GetActorLocation() + FVector(0,0,20),
+		PatrollingPoints[PatrollingPoints.Num() - 1]->GetActorLocation() + FVector(0,0,20),
+		FColor::Green, false,20);
+
 	}
- }
+}

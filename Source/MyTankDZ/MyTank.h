@@ -78,6 +78,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= MovementParams)
 	TSubclassOf<AGrenadeLauncher> GrenadeLauncherClass;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=Patrolling);
+	FName PatrollingPointTag;
+
 	virtual void PossessedBy(AController* NewController) override;
 	
 	void SetupCannon(TSubclassOf<ACannon> InCannonClass);

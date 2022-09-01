@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "MyTank.h"
 #include "PatrollingPoint.h"
 #include "EnemuTankAIController.generated.h"
+
+ 
 
 /**
  * 
@@ -24,6 +27,10 @@ public:
 	virtual void BeginPlay() override;
 
 private:
+	void RebuildMayPoints();
+	
+	AMyTank* TankPawn;
+	
 	TArray<TWeakObjectPtr<APatrollingPoint>> PatrollingPoints;
 	
 };
