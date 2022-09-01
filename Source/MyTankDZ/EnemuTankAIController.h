@@ -20,10 +20,10 @@ public:
 	FName PatrollingPointTag;
 
 	virtual void OnPossess(APawn* InPawn) override;
-	virtual void Tick(float DataSeconds) override;
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
 
 private:
-	TArray<TWeakObjectPtr<APatrollingPoint*>> PatrollingPoints;
+	TArray<TWeakObjectPtr<APatrollingPoint>> PatrollingPoints;
 	
 };
