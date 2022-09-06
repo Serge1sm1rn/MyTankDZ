@@ -9,7 +9,10 @@
 void AEnemuTankAIController::OnPossess(APawn* InPawn)
 {
   Super::OnPossess(InPawn);
-
+  if (TankPawn)
+  {
+  	TankPawn->OnTargetsChanged.Remove(TargetChangeDelegateHandle);
+  }
 	TankPawn = Cast<AMyTank>(InPawn);
   if (TankPawn)
   {
@@ -159,4 +162,15 @@ bool AEnemuTankAIController::CanFire()
 		return true;
 	}
 	return false;
+}
+
+FVector AEnemuTankAIController::GetTargetLocation() const
+{
+	if (CurrentTarget.IsValid())
+	{
+		return CurrentTarget->GetActorLocation();
+	}
+	if(TankPawn)
+	return TankPawn-> GetActorLocation() + TankPawn->GetActorForwardVector() * 1000;
+	return FVector::ZeroVector;
 }

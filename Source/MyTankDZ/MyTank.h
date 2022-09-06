@@ -126,7 +126,7 @@ private:
 	float CurrentMoveRightScale = 0;
 	
 
-	class AMyPlayerController* TankController;
+	class ITargetController* TankController;
 
 	UFUNCTION()
 	void OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

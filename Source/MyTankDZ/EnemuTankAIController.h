@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "MyTank.h"
+#include "TargetController.h"
 #include "PatrollingPoint.h"
 #include "EnemuTankAIController.generated.h"
 
@@ -14,7 +15,7 @@
  * 
  */
 UCLASS()
-class MYTANKDZ_API AEnemuTankAIController : public AAIController
+class MYTANKDZ_API AEnemuTankAIController : public AAIController,public ITargetController
 {
 	GENERATED_BODY()
 
@@ -32,6 +33,8 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void BeginPlay() override;
 
+	virtual FVector GetTargetLocation() const override;
+
 private:
 	void FindBestTarget();
 	bool CanFire();
@@ -41,6 +44,8 @@ private:
 	AMyTank* TankPawn;
 
 	int CurrentWayPointIndex = 0;
+
+	FDelegateHandle TargetChangeDelegateHandle;
 	
 	TArray<TWeakObjectPtr<APatrollingPoint>> PatrollingPoints;
 	TWeakObjectPtr<AActor>CurrentTarget;

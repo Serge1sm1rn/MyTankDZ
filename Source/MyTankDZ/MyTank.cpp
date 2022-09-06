@@ -5,8 +5,8 @@
 
 #include "DrawDebugHelpers.h"
 #include "GrenadeLauncher.h"
+#include "TargetController.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "MyPlayerController.h"
 
 
 
@@ -113,7 +113,7 @@ void AMyTank::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	TankController = Cast<AMyPlayerController>(NewController);
+	TankController = Cast<ITargetController>(NewController);
 }
 
 
@@ -202,7 +202,7 @@ void AMyTank::Tick(float DeltaTime)
 	
 	if (TankController)
 	{
-		auto MousePosition = TankController->GetWorldMousePosition();
+		auto MousePosition = TankController->GetTargetLocation();
 		
 		auto TurretRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),MousePosition );
 		auto CurrentTurretRotation = TurretMesh->GetComponentRotation();

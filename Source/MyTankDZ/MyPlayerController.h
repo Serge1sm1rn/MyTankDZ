@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MyTank.h"
+#include "TargetController.h"
 #include "GameFramework/PlayerController.h"
 #include "MyPlayerController.generated.h"
 
@@ -11,7 +12,7 @@
  * 
  */
 UCLASS()
-class MYTANKDZ_API AMyPlayerController : public APlayerController
+class MYTANKDZ_API AMyPlayerController : public APlayerController, public ITargetController
 {
 	GENERATED_BODY()
 
@@ -22,10 +23,10 @@ public:
 	virtual void OnPossess(APawn* InPawn) override;
 
 	virtual void Tick(float DeltaSeconds) override;
-
-	FVector GetWorldMousePosition() const
+	
+	virtual FVector GetTargetLocation() const override
 	{
-		return  WorldMousePosition;
+		return WorldMousePosition;
 	}
 private:
 	//Variable
