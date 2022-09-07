@@ -7,7 +7,7 @@
 #include "GrenadeLauncher.h"
 #include "TargetController.h"
 #include "Kismet/KismetMathLibrary.h"
-
+#include "Kismet/KismetSystemLibrary.h"
 
 
 // Sets default values
@@ -235,6 +235,12 @@ void AMyTank::Destroyed()
 	if (Cannon)
 	{
 		Cannon->Destroy();
+		auto PlayerController = Cast<APlayerController>(GetController());
+		if (PlayerController)
+		{
+			UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController,FQuitPreference::)
+			FGenericPlatformMisc::RequestExit(false);
+		}
 	}
 	if (GrenadeLauncher)
      	{
