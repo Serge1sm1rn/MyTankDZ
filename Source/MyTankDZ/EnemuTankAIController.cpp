@@ -159,7 +159,24 @@ bool AEnemuTankAIController::CanFire()
 	
 	if (FMath::Abs(Rotation.Yaw - CurrentRotation.Yaw) <= Accuracy)
 	{
-		return true;
+		FHitResult HitResult;
+		FCollisionQueryParams Params;
+			
+		Params.AddIgnoredActor(this);
+		Params.AddIgnoredActor(GetInstigator());
+		
+		if(GetWorld()->LineTraceSingleByChannel(HitResult,
+			TankPawn->CannonAttachment->GetComponentLocation(),
+			CurrentTarget->GetActorLocation(),
+			ECollisionChannel::ECC_Visibility,Params))
+		{
+			if(HitResult.Actor==CurrentTarget)
+			{
+				return true;
+			}
+			
+		}
+		
 	}
 	return false;
 }
