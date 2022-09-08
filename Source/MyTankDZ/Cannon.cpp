@@ -56,6 +56,18 @@ void ACannon::Shoot()
 
 				ParticlesEffect->ActivateSystem();
 				AudioEffect->Play();
+
+				auto Controller = Cast<APlayerController>(GetInstigatorController()) ;
+				if (Controller)
+				{
+					Controller->ClientPlayForceFeedback(ForceFeedback);
+					
+					if (CameraShake)
+					{
+						Controller->ClientStartCameraShake(CameraShake);
+					}
+					
+				}
 			}
 			
 			break;

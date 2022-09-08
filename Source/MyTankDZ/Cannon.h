@@ -78,6 +78,12 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	float TraceDamage = 1;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	UForceFeedbackEffect*ForceFeedback;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	TSubclassOf<UCameraShakeBase> CameraShake;
 	//Variable
 	
 	 void Shoot();
