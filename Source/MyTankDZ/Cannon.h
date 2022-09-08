@@ -51,6 +51,13 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UParticleSystemComponent* ParticlesEffect;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UAudioComponent* AudioEffect;
+	
 	// Sets default values for this actor's properties
 	ACannon();
 

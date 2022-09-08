@@ -238,8 +238,7 @@ void AMyTank::Destroyed()
 		auto PlayerController = Cast<APlayerController>(GetController());
 		if (PlayerController)
 		{
-			UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController,FQuitPreference::)
-			FGenericPlatformMisc::RequestExit(false);
+			UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController,EQuitPreference::Quit,false);
 		}
 	}
 	if (GrenadeLauncher)

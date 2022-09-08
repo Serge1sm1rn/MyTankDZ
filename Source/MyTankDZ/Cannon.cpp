@@ -7,6 +7,8 @@
 #include "DrawDebugHelpers.h"
 #include "MyTankDZ.h"
 #include "Projectile.h"
+#include "Components/AudioComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ACannon::ACannon()
@@ -22,6 +24,12 @@ ACannon::ACannon()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>("ProjectileSpawnPoint");
 	ProjectileSpawnPoint->SetupAttachment(RootComponent);
+
+	ParticlesEffect = CreateDefaultSubobject<UParticleSystemComponent>("ParticleEffect");
+	ParticlesEffect->SetupAttachment(RootComponent);
+
+	AudioEffect = CreateDefaultSubobject<UAudioComponent>("AudioEffect");
+	AudioEffect->SetupAttachment(RootComponent);
 }
 
 //Shooting
@@ -45,6 +53,9 @@ void ACannon::Shoot()
 				SpawnParameters.Instigator = GetInstigator();
 				
 				GetWorld()->SpawnActor<AProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentTransform(), SpawnParameters);
+
+				ParticlesEffect->ActivateSystem();
+				AudioEffect->Play();
 			}
 			
 			break;
@@ -95,6 +106,8 @@ void ACannon::Shoot()
 	
 	IsReadyToShoot = false;
 	GetWorldTimerManager().SetTimer(ReloadTimer,this,&ACannon::OnReload, ReloadTime);
+	ParticlesEffect->ActivateSystem();
+	AudioEffect->Play();
 }
 
 //Alternative shooting

@@ -42,6 +42,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UArrowComponent* GrenadeSpawnPoint;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UParticleSystemComponent* ParticlesEffect;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UAudioComponent* AudioEffect;
 	
 	// Sets default values for this actor's properties
 	AGrenadeLauncher();

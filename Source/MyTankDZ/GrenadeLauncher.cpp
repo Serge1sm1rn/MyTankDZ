@@ -5,6 +5,8 @@
 #include "MyTankDZ.h"
 #include "Projectile.h"
 #include "Components/ArrowComponent.h"
+#include "Components/AudioComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AGrenadeLauncher::AGrenadeLauncher()
@@ -20,6 +22,12 @@ AGrenadeLauncher::AGrenadeLauncher()
 
 	GrenadeSpawnPoint = CreateDefaultSubobject<UArrowComponent>("GrenadeSpawnPoint");
 	GrenadeSpawnPoint->SetupAttachment(RootComponent);
+
+	ParticlesEffect = CreateDefaultSubobject<UParticleSystemComponent>("ParticleEffect");
+	ParticlesEffect->SetupAttachment(RootComponent);
+
+	AudioEffect = CreateDefaultSubobject<UAudioComponent>("AudioEffect");
+	AudioEffect->SetupAttachment(RootComponent);
 }
 
 	void AGrenadeLauncher::DecreaseAmmo()
@@ -110,10 +118,11 @@ void AGrenadeLauncher::OnShoots()
 	
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
 					FString::Printf(TEXT("FireBurst")) );
-
-	
 	
 	DecreaseAmmo();
+
+	ParticlesEffect->ActivateSystem();
+	AudioEffect->Play();
 }
 
 
