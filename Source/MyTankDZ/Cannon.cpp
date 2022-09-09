@@ -105,6 +105,7 @@ void ACannon::Shoot()
 					Data.DamageValue = TraceDamage;
 					Data.Instigator = GetInstigator();
 					Damageble->TakeDamage(Data);
+					
 				}
 				else
 				{

@@ -91,7 +91,22 @@ bool ATurret::CanFire()
 	
 	if (FMath::Abs(Rotation.Yaw - CurrentRotation.Yaw) <= Accuracy)
 	{
-		return true;
+		FHitResult HitResult;
+		FCollisionQueryParams Params;
+			
+		Params.bTraceComplex = true;
+		
+		if(GetWorld()->LineTraceSingleByChannel(HitResult,
+			Cannon->CanonBody->GetComponentLocation(),
+			CurrentTarget->GetActorLocation(),
+			ECollisionChannel::ECC_Visibility, Params))
+		{
+			if(HitResult.Actor==CurrentTarget)
+			{
+				return true;
+			}
+			
+		}
 	}
 	return false;
 }

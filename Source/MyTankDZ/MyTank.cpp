@@ -6,8 +6,10 @@
 #include "DrawDebugHelpers.h"
 #include "GrenadeLauncher.h"
 #include "TargetController.h"
+#include "Components/AudioComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Particles/ParticleSystemComponent.h"
 
 
 // Sets default values
@@ -30,6 +32,12 @@ AMyTank::AMyTank()
 	
 	GrenadeLauncherAttachment = CreateDefaultSubobject<UArrowComponent>("GrenadeLauncherAttachment");
 	GrenadeLauncherAttachment->SetupAttachment(TurretMesh);
+
+	ParticlesEffect = CreateDefaultSubobject<UParticleSystemComponent>("ParticleEffect");
+	ParticlesEffect->SetupAttachment(RootComponent);
+
+	AudioEffect = CreateDefaultSubobject<UAudioComponent>("AudioEffect");
+	AudioEffect->SetupAttachment(RootComponent);
 
 	Arm = CreateDefaultSubobject<USpringArmComponent>("Arm");
 	Arm->SetupAttachment(RootComponent);
@@ -258,8 +266,21 @@ void AMyTank::OnDamaged(FDamageData Damage)
 
 void AMyTank::OnDeath()
 {
+	ParticlesEffect->ActivateSystem();
+ 	AudioEffect->Play();
+
+	GetWorldTimerManager().SetTimer(StopDestroy,this,&AMyTank::OnDestroy, StopDestroyTime);
+	
+	
+	
+	
+}
+
+void AMyTank::OnDestroy()
+{
 	Destroy();
 }
+
 
 void AMyTank::OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
 										UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

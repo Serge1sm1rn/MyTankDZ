@@ -48,6 +48,15 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category= Components)
 	UHealthComponent* HealthComponent;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UParticleSystemComponent* ParticlesEffect;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UAudioComponent* AudioEffect;
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
+	float StopDestroyTime = 0.4;
 	
 	// Sets default values for this pawn's properties
 	AMyTank();
@@ -117,7 +126,8 @@ private:
 	
 	void OnDamaged(FDamageData Damage);
 	void OnDeath();
-	
+	void OnDestroy();
+
 	float MoveForwardScale = 0;
 	float MoveRightScale = 0;
 	float RotateRightScale = 0;
@@ -138,6 +148,8 @@ private:
 	UPROPERTY()
 	ACannon* Cannon;
 	AGrenadeLauncher* GrenadeLauncher;
+
+	FTimerHandle StopDestroy;
 	
 	TArray<TWeakObjectPtr<AActor>>Targets;
 };

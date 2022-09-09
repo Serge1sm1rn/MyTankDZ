@@ -162,13 +162,12 @@ bool AEnemuTankAIController::CanFire()
 		FHitResult HitResult;
 		FCollisionQueryParams Params;
 			
-		Params.AddIgnoredActor(this);
-		Params.AddIgnoredActor(GetInstigator());
+		Params.bTraceComplex = true;
 		
 		if(GetWorld()->LineTraceSingleByChannel(HitResult,
 			TankPawn->CannonAttachment->GetComponentLocation(),
 			CurrentTarget->GetActorLocation(),
-			ECollisionChannel::ECC_Visibility,Params))
+			ECollisionChannel::ECC_Visibility, Params))
 		{
 			if(HitResult.Actor==CurrentTarget)
 			{
