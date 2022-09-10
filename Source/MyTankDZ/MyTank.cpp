@@ -39,6 +39,12 @@ AMyTank::AMyTank()
 	AudioEffect = CreateDefaultSubobject<UAudioComponent>("AudioEffect");
 	AudioEffect->SetupAttachment(RootComponent);
 
+	DamageEffect = CreateDefaultSubobject<UParticleSystemComponent>("DamageEffect");
+	DamageEffect->SetupAttachment(RootComponent);
+
+	DamageAudioEffect = CreateDefaultSubobject<UAudioComponent>("DamageAudioEffect");
+	DamageAudioEffect->SetupAttachment(RootComponent);
+
 	Arm = CreateDefaultSubobject<USpringArmComponent>("Arm");
 	Arm->SetupAttachment(RootComponent);
 	Arm->bInheritPitch = false;
@@ -258,6 +264,9 @@ void AMyTank::Destroyed()
 void AMyTank::TakeDamage(FDamageData Damage)
 {
 	HealthComponent->TakeDamage(Damage);
+
+	DamageEffect->ActivateSystem();
+	DamageAudioEffect->Play();
 }
 void AMyTank::OnDamaged(FDamageData Damage)
 {

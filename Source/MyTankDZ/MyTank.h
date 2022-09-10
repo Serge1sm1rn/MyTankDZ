@@ -55,6 +55,12 @@ public:
 	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
 	UAudioComponent* AudioEffect;
 
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UParticleSystemComponent* DamageEffect;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category= Components)
+	UAudioComponent* DamageAudioEffect;
+
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= Canon)
 	float StopDestroyTime = 0.4;
 	
