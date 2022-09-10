@@ -24,9 +24,7 @@ ATankFactory::ATankFactory()
 
 }
 
-void ATankFactory::TakeDamage(FDamageData Damage)
-{
-}
+
 
 // Called when the game starts or when spawned
 void ATankFactory::BeginPlay()
@@ -58,5 +56,10 @@ void ATankFactory::OnDeath()
 
 void ATankFactory::OnSpawnTick()
 {
+	
 }
 
+void ATankFactory::TakeDamage(FDamageData Damage)
+{
+	
+}
