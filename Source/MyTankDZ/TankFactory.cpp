@@ -3,6 +3,9 @@
 
 #include "TankFactory.h"
 
+#include "Kismet/GameplayStatics.h"
+
+
 // Sets default values
 ATankFactory::ATankFactory()
 {
@@ -56,7 +59,15 @@ void ATankFactory::OnDeath()
 
 void ATankFactory::OnSpawnTick()
 {
-	
+	static int SpawnID = 0;
+    	auto Transform = TankSpawnPoint->GetComponentTransform();
+    	auto MyTank = GetWorld()->SpawnActorDeferred<AMyTank>(MyTankClass,Transform,nullptr,nullptr,ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+    	
+    	MyTank->PatrollingPointTag = PatrollingPointTag;
+    	MyTank->SpawnID = SpawnID;
+    	SpawnID++;
+    
+    	UGameplayStatics::FinishSpawningActor(MyTank,Transform);
 }
 
 void ATankFactory::TakeDamage(FDamageData Damage)

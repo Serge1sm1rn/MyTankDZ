@@ -108,6 +108,9 @@ public:
 	void SetupCannon(TSubclassOf<ACannon> InCannonClass);
 
 	FOnTargetsChanged OnTargetsChanged;
+
+	int SpawnID = -1;
+	
 	
 protected:
 	// Called when the game starts or when spawned

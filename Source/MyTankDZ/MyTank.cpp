@@ -70,6 +70,9 @@ AMyTank::AMyTank()
 void AMyTank::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
+
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Cyan, FString::Printf(TEXT("Tank Spawned %d"), SpawnID));
+
 }
 
 void AMyTank::StartFire()
@@ -217,19 +220,17 @@ void AMyTank::Tick(float DeltaTime)
 	Rotation.Yaw = Rotation.Yaw + RotationSpeed * CurrentRotateRightScale * DeltaTime;
 	SetActorRotation(Rotation);
 
-	/*
+	
 	//Controller rotation
-	
-	ControllerTurretRotationScale = FMath::Lerp(ControllerTurretRotationScale, RotateRightScale, Acceleration);
-	
-	auto ControllerTurretRotation = TurretMesh->GetComponentRotation();
-	ControllerTurretRotation.Yaw = ControllerTurretRotation.Yaw + RotationSpeed * ControllerTurretRotationScale * DeltaTime;
-	TurretMesh->SetWorldRotation(ControllerTurretRotation);
-	*/
-
-	//TurretRotation
-	
-	if (TankController)
+	if (ControllerTurretRotationScale != 0)
+	{
+		ControllerTurretRotationScale = FMath::Lerp(ControllerTurretRotationScale, RotateRightScale, Acceleration);
+        	
+        	auto ControllerTurretRotation = TurretMesh->GetComponentRotation();
+        	ControllerTurretRotation.Yaw = ControllerTurretRotation.Yaw + RotationSpeed * ControllerTurretRotationScale * DeltaTime;
+        	TurretMesh->SetWorldRotation(ControllerTurretRotation);
+	}
+	else
 	{
 		auto MousePosition = TankController->GetTargetLocation();
 		
@@ -245,7 +246,7 @@ void AMyTank::Tick(float DeltaTime)
 		CannonAttachment->GetComponentLocation() + CannonAttachment->GetForwardVector() * 100, FColor::Green,
 		false,-1,0,5);
 
-	    DrawDebugLine(GetWorld(),
+		DrawDebugLine(GetWorld(),
 		GrenadeLauncherAttachment->GetComponentLocation(),
 		GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 1000, FColor::Yellow,
 		false,-1,0,5);
