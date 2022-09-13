@@ -13,6 +13,7 @@ void AMyPlayerController::SetupInputComponent()
 	InputComponent ->BindAxis("MoveForward", this, &AMyPlayerController::OnMoveForward);
 	InputComponent ->BindAxis("RotateRight", this, &AMyPlayerController::OnRotateRight);
 	InputComponent ->BindAxis("MoveRight", this, &AMyPlayerController::OnMoveRight);
+	InputComponent ->BindAxis("ControllerRotation", this, &AMyPlayerController::OnControllerTurretRotation);
 	InputComponent ->BindAction("Fire",IE_Pressed, this, &AMyPlayerController::OnStartFire);
 	InputComponent ->BindAction("Fire",IE_Released, this, &AMyPlayerController::OnStopFire);
 	InputComponent ->BindAction("FiringBursts",IE_Pressed, this, &AMyPlayerController::OnFireBurst);
@@ -98,5 +99,13 @@ void AMyPlayerController::OnRotateRight(float Scale)
 	if (Tank)
 	{
 		Tank->RotateRight(Scale);
+	}
+}
+
+void AMyPlayerController::OnControllerTurretRotation(float Scale)
+{
+	if (Tank)
+	{
+		Tank->ControllerTurretRotation(Scale);
 	}
 }

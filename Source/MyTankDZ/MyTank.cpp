@@ -88,7 +88,6 @@ void AMyTank::StopFire()
 		Cannon->StopFire();
 	}
 	
-	
 }
 
 void AMyTank::FireBurst()
@@ -129,6 +128,12 @@ void AMyTank::PossessedBy(AController* NewController)
 
 	TankController = Cast<ITargetController>(NewController);
 }
+
+void AMyTank::ControllerTurretRotation(float Scale)
+{
+	ControllerTurretRotationScale = Scale;
+}
+
 
 
 
@@ -212,6 +217,16 @@ void AMyTank::Tick(float DeltaTime)
 	Rotation.Yaw = Rotation.Yaw + RotationSpeed * CurrentRotateRightScale * DeltaTime;
 	SetActorRotation(Rotation);
 
+	/*
+	//Controller rotation
+	
+	ControllerTurretRotationScale = FMath::Lerp(ControllerTurretRotationScale, RotateRightScale, Acceleration);
+	
+	auto ControllerTurretRotation = TurretMesh->GetComponentRotation();
+	ControllerTurretRotation.Yaw = ControllerTurretRotation.Yaw + RotationSpeed * ControllerTurretRotationScale * DeltaTime;
+	TurretMesh->SetWorldRotation(ControllerTurretRotation);
+	*/
+
 	//TurretRotation
 	
 	if (TankController)
@@ -235,6 +250,11 @@ void AMyTank::Tick(float DeltaTime)
 		GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 1000, FColor::Yellow,
 		false,-1,0,5);
 	}
+
+	
+	
+
+	
 	
 }
 

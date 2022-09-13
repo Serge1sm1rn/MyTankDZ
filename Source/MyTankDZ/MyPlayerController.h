@@ -46,6 +46,8 @@ private:
 	void OnMoveRight(float Scale);
 
 	void OnRotateRight(float Scale);
+
+	void OnControllerTurretRotation (float Scale);
 	
 	AMyTank* Tank = nullptr;
 

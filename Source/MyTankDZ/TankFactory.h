@@ -37,7 +37,10 @@ public:
 	TSubclassOf<AMyTank> MyTankClass;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly,Category= "Tank Factory")
-	float SpawnRate = 1;
+	float SpawnRate = 1;	
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=Patrolling);
+	FName PatrollingPointTag;
 
 	virtual void TakeDamage(FDamageData Damage) override;
 

@@ -76,6 +76,7 @@ public:
 	void RotateRight(float Scale);
 	void StartFire();
 	void StopFire();
+	void ControllerTurretRotation(float Scale);
 	
 
 
@@ -103,6 +104,7 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override;
 	
+
 	void SetupCannon(TSubclassOf<ACannon> InCannonClass);
 
 	FOnTargetsChanged OnTargetsChanged;
@@ -140,6 +142,7 @@ private:
 	float CurrentMoveForwardScale = 0;
 	float CurrentRotateRightScale = 0;
 	float CurrentMoveRightScale = 0;
+	float ControllerTurretRotationScale = 0;
 	
 
 	class ITargetController* TankController;
