@@ -72,5 +72,5 @@ void ATankFactory::OnSpawnTick()
 
 void ATankFactory::TakeDamage(FDamageData Damage)
 {
-	
+	HealthComponent->TakeDamage(Damage);
 }

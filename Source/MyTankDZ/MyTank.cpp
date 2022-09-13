@@ -2,7 +2,6 @@
 
 
 #include "MyTank.h"
-
 #include "DrawDebugHelpers.h"
 #include "GrenadeLauncher.h"
 #include "TargetController.h"
@@ -10,7 +9,6 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Particles/ParticleSystemComponent.h"
-
 
 // Sets default values
 AMyTank::AMyTank()
@@ -72,7 +70,6 @@ void AMyTank::OnConstruction(const FTransform& Transform)
 	Super::OnConstruction(Transform);
 
 	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Cyan, FString::Printf(TEXT("Tank Spawned %d"), SpawnID));
-
 }
 
 void AMyTank::StartFire()
@@ -81,7 +78,6 @@ void AMyTank::StartFire()
 	{
 		Cannon->StartFire();
 	}
-	
 }
 
 void AMyTank::StopFire()
@@ -90,7 +86,6 @@ void AMyTank::StopFire()
 	{
 		Cannon->StopFire();
 	}
-	
 }
 
 void AMyTank::FireBurst()
@@ -124,7 +119,6 @@ void AMyTank::RotateRight(float Scale)
 	RotateRightScale = Scale;
 }
 
-
 void AMyTank::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -136,11 +130,6 @@ void AMyTank::ControllerTurretRotation(float Scale)
 {
 	ControllerTurretRotationScale = Scale;
 }
-
-
-
-
-
 
 // Called when the game starts or when spawned
 void AMyTank::BeginPlay()
@@ -181,13 +170,10 @@ void AMyTank::SetupCannon(TSubclassOf<ACannon> InCannonClass)
 		}
 }
 
-	
-
 /*void AMyTank::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 }*/
-
 
 // Called every frame
 void AMyTank::Tick(float DeltaTime)
@@ -251,12 +237,6 @@ void AMyTank::Tick(float DeltaTime)
 		GrenadeLauncherAttachment->GetComponentLocation() + GrenadeLauncherAttachment->GetForwardVector() * 1000, FColor::Yellow,
 		false,-1,0,5);
 	}
-
-	
-	
-
-	
-	
 }
 
 // Called to bind functionality to input
@@ -301,16 +281,12 @@ void AMyTank::OnDeath()
 
 	GetWorldTimerManager().SetTimer(StopDestroy,this,&AMyTank::OnDestroy, StopDestroyTime);
 	
-	
-	
-	
 }
 
 void AMyTank::OnDestroy()
 {
 	Destroy();
 }
-
 
 void AMyTank::OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
 										UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -319,16 +295,14 @@ void AMyTank::OnTargetRangeBeginOverLap(UPrimitiveComponent* OverlappedComp, AAc
 	{
 		return;
 	}
-	if (!Other->IsA<AMyTank>())
+	
+	auto OtherTank = Cast<AMyTank>(Other);
+	if (OtherTank)
 	{
-		return;
+		Targets.Add(OtherTank);
+		OnTargetsChanged.Broadcast();
 	}
-	Targets.Add(Other);
 	
-	OnTargetsChanged.Broadcast();
-	
-
-
 }
 
 void AMyTank::OnTargetRangeEndOverLap(UPrimitiveComponent* OverlappedComp, AActor* Other,
@@ -338,14 +312,13 @@ void AMyTank::OnTargetRangeEndOverLap(UPrimitiveComponent* OverlappedComp, AActo
 	{
 		return;
 	}
-	if (!Other->IsA<AMyTank>())
+	
+	auto OtherTank = Cast<AMyTank>(Other);
+	if (OtherTank)
 	{
-		return;
+		Targets.Add(OtherTank);
+		OnTargetsChanged.Broadcast();
 	}
-	Targets.Remove(Other);
-
-	OnTargetsChanged.Broadcast();
-
 	
 }
 

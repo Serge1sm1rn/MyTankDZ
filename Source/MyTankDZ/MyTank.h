@@ -128,7 +128,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Destroyed();
 
-	const TArray<TWeakObjectPtr<AActor>>& GetPossibleTargets() const
+	const TArray<TWeakObjectPtr<AMyTank>>& GetPossibleTargets() const
 	{
 		return Targets;
 	}
@@ -163,5 +163,5 @@ private:
 
 	FTimerHandle StopDestroy;
 	
-	TArray<TWeakObjectPtr<AActor>>Targets;
+	TArray<TWeakObjectPtr<AMyTank>>Targets;
 };
