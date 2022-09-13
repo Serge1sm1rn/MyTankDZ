@@ -142,11 +142,11 @@ void AEnemuTankAIController::FindBestTarget()
 			{
 				auto Distance = FVector::DistXY(Location, Target->GetActorLocation());
                 			
-                			if(Distance < MinDistance)
-                			{
-                				MinDistance = Distance;
-                				NewTarget = Target.Get();
-                			}
+				if(Distance < MinDistance)
+				{
+					MinDistance = Distance;
+					NewTarget = Target.Get();
+				}
 			}
 			
 		}
