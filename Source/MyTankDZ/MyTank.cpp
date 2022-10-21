@@ -251,10 +251,10 @@ void AMyTank::Destroyed()
 	{
 		Cannon->Destroy();
 		auto PlayerController = Cast<APlayerController>(GetController());
-		if (PlayerController)
+		/*if (PlayerController)
 		{
 			UKismetSystemLibrary::QuitGame(GetWorld(), PlayerController,EQuitPreference::Quit,false);
-		}
+		}*/
 	}
 	if (GrenadeLauncher)
      	{
